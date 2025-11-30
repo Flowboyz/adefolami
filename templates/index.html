@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hendles Builders</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<!-- NAV -->
+<nav class="nav">
+    <div class="nav-inner">
+        <div class="brand">Hendles Builders</div>
+        <button id="nav-toggle" aria-label="menu">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+        <h1>Revitalize your<br>historic structure</h1>
+        <a href="#contact" class="btn">Get in touch</a>
+    </div>
+</header>
+
+
+<!-- ABOUT -->
+<section id="about" class="about">
+    <div class="about-left">
+        <h2>We are a local business focusing on historic preservation, using traditional materials and techniques.</h2>
+        <p>Write a paragraph that talks about your company here. You can talk about your company’s background, history, mission, vision, or philosophy. Anything that will introduce your brand’s persona to your clients.</p>
+    </div>
+    <div class="about-right">
+        <img src="/static/img/building.jpg" alt="building">
+    </div>
+</section>
+
+
+<!-- SERVICES -->
+<section id="services" class="services">
+    <div class="container">
+        <h2>Services</h2>
+        <p class="lead">Convince your prospective clients to choose you and your team for their construction needs.</p>
+
+
+        <div class="cards">
+            <article class="card reveal">
+                <img src="/static/img/window.jpg" alt="window"/>
+                <h4>Window Restoration</h4>
+            </article>
+
+
+            <article class="card reveal">
+                <img src="/static/img/wood.jpg" alt="woodwork"/>
+                <h4>Woodwork Replication</h4>
+            </article>
+
+
+            <article class="card reveal">
+                <img src="/static/img/paint.jpg" alt="paint"/>
+                <h4>Lead Paint Removal</h4>
+            </article>
+        </div>
+    </div>
+</section>
+<!-- PROJECTS -->
+<section id="projects" class="projects">
+    <h2>Projects</h2>
+    <div class="project-grid">
+        <figure class="proj reveal"><img src="/static/img/project1.jpg" alt="p1"><figcaption>OBSIDIAN BANK</figcaption></figure>
+        <figure class="proj reveal"><img src="/static/img/project2.jpg" alt="p2"><figcaption>EUREKA VISION THEATER</figcaption></figure>
+        <figure class="proj reveal"><img src="/static/img/project3.jpg" alt="p3"><figcaption>ROSETON BUILDING</figcaption></figure>
+    </div>
+</section>
+
+
+<!-- STATS -->
+<section class="stats">
+    <div class="stat"> <h3>Year Established</h3><p>1902</p></div>
+    <div class="stat"> <h3>Skilled Artisans</h3><p>56</p></div>
+    <div class="stat"> <h3>Completed Projects</h3><p>1,000+</p></div>
+</section>
+
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+    <h2>From Our Satisfied Clients</h2>
+    <div class="test-grid">
+        <blockquote class="reveal">Boost your product and service’s credibility by adding testimonials...<cite>- Bass Co.</cite></blockquote>
+        <blockquote class="reveal">People love recommendations...<cite>- Micheleur Law</cite></blockquote>
+        <blockquote class="reveal">Feedback from others who’ve tried it is invaluable.<cite>- Studio Rallia</cite></blockquote>
+    </div>
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+    <div class="contact-wrap">
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <label>Name <input name="name" type="text" required></label>
+                <label>Email <input name="email" type="email" required></label>
+                <label>Message <textarea name="message" rows="5" required></textarea></label>
+                <button type="submit" class="btn">Send Message</button>
+                <p id="form-status" role="status" aria-live="polite"></p>
+            </form>
+
+
+        <div class="contact-info">
+            <h3>Fort Leburg</h3>
+            <p>123 Anywhere St., Any City, ST 12345</p>
+            <p>Tel: (123) 456-7890</p>
+            <p>Email: hello@reallygreatsite.com</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="brand">Hendles Builders</div>
+        <div class="copy">© <span id="year"></span> Hendles Builders</div>
+    </div>
+</footer>
+
+
+<script src="static/js/main.js"></script>
+</body>
+</html>
