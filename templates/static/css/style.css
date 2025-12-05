@@ -1,11 +1,15 @@
 :root{
---accent: #eaeff2;
+--accent: rgb(212, 182, 30);
 --muted: #bcbcbc;
 --black: #0b0b0b;
 }
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box
+}
+
 html,body{
   height: 100%;
+  width: 100%;
   font-family: Inter, system-ui, Arial, sans-serif;
   color: var(--black);
 }
@@ -29,31 +33,37 @@ img{
   left: 0;
   right: 0;
   z-index: 40;
-  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  background: linear-gradient(180deg, #0e1c2bff, rgb(163, 148, 77),
+   rgb(163, 149, 77), rgb(100, 85, 10), #202425ff);
   backdrop-filter: blur(4px);
+  color: #fff;
 }
 
 .nav-inner{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 24px;
-  max-width: 1200px;
+  padding: 20px 24px;
+  max-width: 1900px;
   margin: 0 auto
 }
 
 .brand{
-  font-weight :700
+  font-size: 40px;
+  font-weight :700;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .nav-links{
   list-style :none;
   display :flex;
   gap :20px;
+  font-size: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .nav-links a{
-  text-decoration:;none;
+  text-decoration: underline;
   color: inherit;
 }
 
@@ -66,8 +76,8 @@ img{
 
 /* HERO */
 .hero{
-  height: 86vh;
-  background: url('/static/img/hero.jpg') center/cover no-repeat;
+  height: 100vh;
+  background: url('static/img/hero.jpg') center/cover no-repeat;
   display: flex;
   align-items: flex-end;
 }
@@ -75,12 +85,13 @@ img{
 .hero-overlay{
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(11,11,11,0.5) 0%, rgba(11,11,11,0.15) 40%);
+  background: linear-gradient(90deg, rgb(212, 182, 30) 0%,
+   rgba(11,11,11,0.15) 40%);
 }
 
 .hero-inner{
   position: relative;
-  color: white;
+  color: black;
   padding: 100px 60px;
   max-width: 700px;
   z-index: 2;
@@ -92,25 +103,28 @@ img{
   margin-bottom: 18px;
 }
 
-.btn{display:inline-block;
-  background:white;
-  color: black;
+.btn{
+  display:inline-block;
+  background:rgb(44, 44, 44);
+  color: rgb(212, 182, 30);
   padding: 12px 18px;
   border-radius: 4px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 1000;
 }
 
 /* ABOUT */
 .about{
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap:30px;padding: 80px 0;
+  gap: 30px;
+  padding: 80px 0;
   background: #000;
   color: #fff;
 }
 .about-left{
-  padding: 0 60px;
+  padding: 0 40px;
 }
 
 .about-left h2{
@@ -126,29 +140,44 @@ img{
 
 /* SERVICES */
 .services{
-  padding: 70px 0;
-  background: #fff;
+  height: 50vh;
+  padding: 20px 0;
+  background: #d1c9c9;
+  margin-bottom: 20px;
 }
 
 .services .lead{
   color: #666;
-  max-width: 700px;
+  /* max-width: 700px; */
+  font-size: 18px;
+  font-weight: 180px;   
+  font-style: italic;
 }
 
 .cards{
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 20px;
+  grid-template-columns: repeat(5,1fr);
+  gap: 30px;
   margin-top: 30px;
-}
-.card{
-  background: #f8f8f8;
-  padding: 10px;
-  border-radius: 6px;
-  overflow: hidden;
+  height: fit-content;
+  width: fit-content;
 }
 
-.card h4{margin-top: 10px;
+.card-reveal{
+  background: #f8f8f8;
+  padding: 1px;
+  border-radius: 15px;
+  overflow: hidden;
+  color: black;
+}
+
+/* .card-reveal img{
+ width: 100%;
+ height: 100%;
+} */
+
+.card h4{
+  /* margin-top: 1px; */
   font-size: 1rem;
 }
 
@@ -157,6 +186,7 @@ img{
   padding: 70px 0;
   background: #000;
   color: #fff;
+  height: 100%;
 }
 
 .project-grid{
@@ -190,6 +220,7 @@ img{
 
 /* TESTIMONIALS */
 .testimonials{
+  height: 100vh;
   padding: 70px 20px;
 }
 
@@ -213,7 +244,7 @@ blockquote cite{
 
 /* CONTACT */
 .contact{
-  background: #fff;
+  background: rgb(212, 182, 30);
   padding: 70px 20px;
 }
 
@@ -230,7 +261,7 @@ blockquote cite{
   margin-bottom: 12px;
 }
 
-.contact input,.contact textarea{
+.contact input .contact textarea{
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -239,22 +270,23 @@ blockquote cite{
 
 .contact-info{
   background: #f4f4f4;
-  padding: 18px;
+  padding: 18px ;
   border-radius: 6px;
 }
 
 /* FOOTER */
 footer{
-  background: #101010;
-  color: #fff;
+  background: linear-gradient(180deg, rgb(14, 13, 12),  rgb(91, 78, 20), rgb(212, 182, 30), rgb(212, 182, 30), rgb(91, 79, 20), rgb(23, 23, 21));
+  color: white;
   padding: 30px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .footer-inner{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1900px;
   margin: 0 auto;
 }
 
