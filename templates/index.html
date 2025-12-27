@@ -4,7 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Adefolami Structural Solutions</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <!-- <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/main.js"></script> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
 </head>
 <body>
 <!-- NAV -->
@@ -116,10 +121,10 @@
     <div class="contact-wrap">
             <h2>Contact Us</h2>
             <form id="contact-form">
-                <label>Name <input name="name" type="text" required></label>
-                <label>Email <input name="email" type="email" required></label>
-                <label>Message <textarea name="message" rows="5" required></textarea></label>
-                <button type="submit" class="btn">Send Message</button>
+                <label>Name: <input name="name" type="text" required></label>
+                <label>Email: <input name="email" type="email" required></label>
+                <label>Message:  <textarea name="message" rows="5" cols="40" required></textarea></label>
+                <button type="submit" class="bttn">Send Message</button>
                 <p id="form-status" role="status" aria-live="polite"></p>
             </form>
 

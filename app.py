@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, url_for
 from email_validator import validate_email, EmailNotValidError
 import json, os
 
@@ -27,7 +27,7 @@ def index():
  return render_template('index.html')
 
 
-@app.route('/contact', method=['POST'])
+@app.route('/contact', methods=['POST'])
 def contact():
     try:
         payload = request.get_json()
