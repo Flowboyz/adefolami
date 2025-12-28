@@ -132,8 +132,8 @@ if (backToTop) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
+
 document.getElementById('count');
-const options = { treshold: 0.5};
 let count = 0;
 let target = 1000;
 let interval = setInterval(() => {
@@ -142,4 +142,4 @@ let interval = setInterval(() => {
   if (count == target){
     clearInterval(interval);
   }
-}, 0.002)
+}, 0.1)

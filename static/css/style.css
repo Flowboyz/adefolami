@@ -51,10 +51,18 @@ img{
   justify-content: space-between;
   padding: 18px var(--gutter);
   max-width: 1900px;
-  margin: 0 auto
+  margin: 0 auto;
 } 
-
 .brand{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.brand img{
+  border-radius: 50%;
+}
+.brand h1{
   font-size: 30px;
   font-weight :700;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -159,6 +167,15 @@ img{
   font-size: 40px;
   font-weight: 700;
 }
+#about h1::after{
+  content: '';
+  width: 80px;
+  height: 4px;
+  background: var(--accent);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 3px;
+}
 .about-left{
   padding: 0 40px;
 }
@@ -170,13 +187,15 @@ img{
 }
 .about-left p{
   line-height: 2;
+  text-align: justify;
 }
 
 .about-right img{
-  height: 360px;
-  object-fit: cover;
+  height: 550px;
+  object-fit: fill;
   width: 100%;
   border-radius: 8px;
+  border: 1px solid white;
 }
 .about-right img:hover{
     transition: 0.3s ease-in-out;
@@ -197,6 +216,15 @@ img{
   text-align: center;
   font-size: 40px;
   margin-bottom: 10px;
+}
+.services h2::after{
+  content: '';
+  width: 80px;
+  height: 4px;
+  background: var(--accent);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 3px;
 }
 .services .lead{
   color: #666;
@@ -414,26 +442,38 @@ animation: move 1s linear infinite;
   line-height: 2;
   padding-bottom: 15px;
 }
+.contact h2::after{
+  content: '';
+  width: 80px;
+  height: 4px;
+  background: var(--accent);
+  display: block;
+  margin: 12px auto 0;
+  border-radius: 3px;
+}
 .contact-wrap{
   display: flex;
   justify-content: space-between;
   position: relative;
+  align-items: center;
 }
 
 .contact form{
   background-color: #fff;
-  padding: 30px 30px;
+  padding: 30px 10px;
   padding-bottom: 0px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  top: 0;
   position: absolute;
   right: 20px;
   padding: 40px;
+  height: 450px;
 }
-.contact form:active{
+/* .contact form:active{
     animation: bounce 1s ease;
     scroll-behavior: smooth;
 }
@@ -442,7 +482,7 @@ animation: move 1s linear infinite;
   30%{transform: translateY(-100px)}
   50%{transform: translateY(-100px)}
   100%{transform: translateY(0)}
-}
+} */
 form label{
   color: #000;
   font-size: 18px;
@@ -485,9 +525,9 @@ form button{
 
 .contact-info{
   background: #f4f4f4;
-  padding: 18px ;
+  padding: 30px 30px;
   border-radius: 6px;
-  width: 550px;
+
   height: 450px;
   display: flex;
   flex-direction: column;
@@ -523,8 +563,9 @@ iframe{
   footer{
     display: flex;
     justify-content: space-between;
-    padding: 40px var(--gutter);
-    background: var(--surface);
+    padding: 10px var(--gutter);
+    
+    align-items: center;
 }
 .col{
     display: flex;
@@ -542,6 +583,10 @@ iframe{
     text-align: center;
     font-size: 13px;
     margin-bottom: 40px;
+}
+.footer-inner .copy{
+  text-align: center;
+  padding-bottom: 10px;
 }
 footer .logo{
     margin-bottom: 30px;
@@ -660,7 +705,8 @@ footer a:hover{
   height: 70px;
   border-radius: 50%;
   color: rgb(255, 255, 255);
-  background-color: #000;
+  background: rgb(163, 148, 77);
+  border: 1px solid white;
   font-size: 40px;
   font-weight: 600;
   text-align: center;
@@ -668,6 +714,7 @@ footer a:hover{
   position: fixed;
   bottom: 40px;
   right: 20px;
+  cursor: pointer;
 }
 
 /* Responsive */
