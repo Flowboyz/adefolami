@@ -27,7 +27,7 @@ def index():
  return render_template('index.html')
 
 
-@app.route('/contact', method=['POST'])
+@app.route('/contact', methods=['POST'])
 def contact():
     try:
         payload = request.get_json()
