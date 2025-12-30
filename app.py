@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, url_for
 from email_validator import validate_email, EmailNotValidError
 import json, os
 
@@ -25,6 +25,7 @@ def save_contact(data):
 @app.route('/')
 def index():
  return render_template('index.html')
+ return render_template('hotelmotif.html')
 
 
 @app.route('/contact', methods=['POST'])

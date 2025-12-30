@@ -132,8 +132,8 @@ if (backToTop) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
+
 document.getElementById('count');
-const options = { treshold: 0.5};
 let count = 0;
 let target = 1000;
 let interval = setInterval(() => {
@@ -142,4 +142,114 @@ let interval = setInterval(() => {
   if (count == target){
     clearInterval(interval);
   }
-}, 0.002)
+}, 0.1)
+
+
+const slide = document.querySelector(".slider");
+const dot = document.querySelectorAll(".dot");
+
+let index1 = 0;
+
+function moveSlide(i){
+  slide.style.transform = `translateX(-${i * 50}%)`;
+  dot.forEach(d => d.classList.remove("active"));
+  dot[i].classList.add("active");
+}
+
+dot.forEach((dot,i)=>{
+  dot.addEventListener("click",()=>{
+    index1 = i;
+    moveSlide(index1);
+  });
+});
+
+// auto animation
+setInterval(()=>{
+  index1 = (index1 + 1) % 2;
+  moveSlide(index1);
+},5000);
+
+const slider = document.querySelector(".cert-slider");
+const slides = document.querySelectorAll(".cert-slide");
+const dots = document.querySelectorAll(".cert-pagination .dot");
+const nextBtn = document.querySelector(".next");
+const prevBtn = document.querySelector(".prev");
+
+let index = 0;
+let isAnimating = false;
+let autoSlide;
+
+/* Get exact width of ONE slide */
+function slideWidth() {
+  return slides[0].getBoundingClientRect().width;
+}
+
+/* CORE MOVE FUNCTION */
+function goToSlide(i) {
+  if (isAnimating) return;
+  isAnimating = true;
+
+  index = i;
+
+  /* Move LEFT by exact pixels */
+  slider.style.transform = `translateX(-${index * slideWidth()}px)`;
+
+  /* Update dots IMMEDIATELY */
+  dots.forEach(dot => dot.classList.remove("active"));
+  dots[index].classList.add("active");
+
+  /* Unlock after animation finishes */
+  setTimeout(() => {
+    isAnimating = false;
+  }, 800); // must match CSS transition time
+}
+
+/* NEXT / PREV */
+function nextSlide() {
+  index = (index + 1) % slides.length;
+  goToSlide(index);
+}
+
+function prevSlide() {
+  index = (index - 1 + slides.length) % slides.length;
+  goToSlide(index);
+}
+
+/* BUTTON EVENTS */
+nextBtn.addEventListener("click", () => {
+  nextSlide();
+  resetAuto();
+});
+
+prevBtn.addEventListener("click", () => {
+  prevSlide();
+  resetAuto();
+});
+
+/* DOT EVENTS */
+dots.forEach((dot, i) => {
+  dot.addEventListener("click", () => {
+    goToSlide(i);
+    resetAuto();
+  });
+});
+
+/* AUTO SLIDE */
+function startAuto() {
+  autoSlide = setInterval(nextSlide, 6000);
+}
+
+function resetAuto() {
+  clearInterval(autoSlide);
+  startAuto();
+}
+
+/* INIT */
+goToSlide(0);
+startAuto();
+
+/* Recalculate on resize */
+window.addEventListener("resize", () => {
+  slider.style.transform = `translateX(-${index * slideWidth()}px)`;
+});
+

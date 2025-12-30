@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Borehole Drilling</title>
+<style>s
+body{font-family:Arial;margin:20px}
+.project{display:flex;justify-content:space-around;flex-wrap:wrap; margin-bottom:20px}
+img{width:500px; height: 500px; display:block;margin:auto;border-radius:10px}
+.about{max-width:500px;margin:20px auto;line-height: 2;text-align:justify}
+.review{max-width:500px;margin:auto;border-top:1px solid #ccc;padding-top:20px; text-align:center}
+.stars span{font-size:30px;cursor:pointer;color:#ccc}
+.stars .active{color:gold}
+textarea{width:100%;height:100px}
+button{margin-top:10px;padding:10px 20px;background:#0077cc;color:#fff;border:none}
+</style>
+</head>
+<body>
+
+<h1 align="center">Borehole Drilling</h1>
+<div class="project">
+<img src="../static/img/borehole.png">
+
+<div class="about">
+<p>This borehole drilling project provided clean and sustainable water access. Geological surveys were conducted to determine water table depth, followed by drilling, casing, and pump installation. The project meets safety and environmental standards.</p>
+</div>
+</div>
+
+<div class="review">
+<h2>Leave a Review</h2>
+<div class="stars">
+<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+</div>
+<textarea placeholder="Your review..."></textarea>
+<button>Submit Review</button>
+</div>
+
+<script>
+document.querySelectorAll(".stars span").forEach((s,i)=>{
+s.onclick=()=>{document.querySelectorAll(".stars span").forEach(st=>st.classList.remove("active"));
+for(let j=0;j<=i;j++)document.querySelectorAll(".stars span")[j].classList.add("active");
+}});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Motif Project</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  h1 { text-align: center; margin-bottom: 10px; }
+  .project { display: flex; justify-content: space-around;}
+  .project-image { display: block; margin: 0 auto; max-width: 500px; height: 500px; border-radius: 10px; }
+  .project-about { margin: 20px auto; max-width: 800px; text-align: justify; line-height: 2; font-family: Arial, sans-serif; width: 600px;}
+  .review-section { margin: 40px auto; max-width: 500px; border-top: 1px solid #ccc; padding-top: 20px; }
+  .review-section h2 { text-align: center; margin-bottom: 10px; }
+  .stars { display: flex; justify-content: center; margin-bottom: 10px; }
+  .stars span { font-size: 2rem; cursor: pointer; color: #ccc; }
+  .stars span.selected { color: gold; }
+  textarea { width: 100%; padding: 10px; resize: none; height: 100px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px; }
+  button { display: block; margin: 0 auto; padding: 10px 20px; background-color: #0077cc; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+  button:hover { background-color: #005fa3; }
+</style>
+</head>
+<body>
+
+<h1>HOTEL MOTIF</h1>
+<div class="project">
+<img src="../static/img/hotel.png" alt="hotel motif" class="project-image">
+<div class="project-about">
+  <p>This project involved designing and constructing a modern hotel motif with emphasis on aesthetics, sustainability, and customer comfort. The project included detailed architectural planning, interior decoration, and implementation of energy-efficient systems. We ensured that all design elements reflect both functionality and elegance, delivering a professional and welcoming environment for guests.</p>
+</div>
+</div>
+
+<div class="review-section">
+  <h2>Leave a Review</h2>
+  <div class="stars" id="star-rating">
+    <span data-value="1">&#9733;</span>
+    <span data-value="2">&#9733;</span>
+    <span data-value="3">&#9733;</span>
+    <span data-value="4">&#9733;</span>
+    <span data-value="5">&#9733;</span>
+  </div>
+  <textarea placeholder="Write your review here..."></textarea>
+  <button onclick="submitReview()">Submit Review</button>
+</div>
+
+<script>
+  const stars = document.querySelectorAll('#star-rating span');
+  let rating = 0;
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      rating = star.getAttribute('data-value');
+      updateStars(rating);
+    });
+  });
+
+  function updateStars(rating) {
+    stars.forEach(star => {
+      if(star.getAttribute('data-value') <= rating){
+        star.classList.add('selected');
+      } else {
+        star.classList.remove('selected');
+      }
+    });
+  }
+
+  function submitReview() {
+    const reviewText = document.querySelector('textarea').value;
+    if(!reviewText) {
+      alert("Please write a review before submitting.");
+      return;
+    }
+    alert(`Thank you for your review!\nRating: ${rating} stars\nReview: ${reviewText}`);
+    // Reset form
+    document.querySelector('textarea').value = "";
+    updateStars(0);
+    rating = 0;
+  }
+</script>
+
+</body>
+</html>
