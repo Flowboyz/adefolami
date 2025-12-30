@@ -66,7 +66,7 @@ revealOnScroll();
 // ===========================
 // CONTACT FORM - FLASK CONNECT
 // ===========================
-const contactForm = document.getElementById("contact-form");
+const contactForm = document.querySelector(".contact-form");
 
 if (contactForm) {
   contactForm.addEventListener("submit", async (e) => {
@@ -253,3 +253,5 @@ window.addEventListener("resize", () => {
   slider.style.transform = `translateX(-${index * slideWidth()}px)`;
 });
 
+let contactForm = document.querySelector('.contact')
+function
