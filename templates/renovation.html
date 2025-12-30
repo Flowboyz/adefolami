@@ -1,45 +1,84 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>School Renovation</title>
-<style>
-body{font-family:Arial;margin:20px; margin-bottom:30px;}
-.project{display: flex;justify-content: center; padding: 40px 80px;}
-img{width:500px;height: 500px;display:block;margin:auto;border-radius:10px}
-.about{max-width:600px;margin:20px auto;line-height: 2;text-align:justify}
-.review{max-width:500px;margin:auto;border-top:1px solid #ccc;padding-top:20px}
-.stars span{font-size:30px;cursor:pointer;color:#ccc}
-.stars .active{color:gold}
-textarea{width:100%;height:100px}
-button{margin-top:10px;padding:10px 20px;background:#0077cc;color:#fff;border:none}
-</style>
-</head>
-<body>
+    <head>
+        <title>School Renovation</title>
+        <style>
+            body{
+                font-family:Arial;
+                margin:20px; 
+                margin-bottom:30px;
+            }
+            .project{
+                display: flex;
+                justify-content: center; 
+                padding: 40px 80px;
+            }
+            img{
+                width:500px;
+                height: 500px;
+                display:block;
+                margin:auto;
+                border-radius:10px
+            }
+            .about{
+                max-width:600px;
+                margin:20px auto;
+                line-height: 2;
+                text-align:justify
+            }
+            .review{
+                max-width:500px;
+                margin:auto;
+                border-top:1px solid #ccc;
+                padding-top:20px
+            }
+            .stars span{
+                font-size:30px;
+                cursor:pointer;
+                color:#ccc
+            }
+            .stars .active{
+                color:gold
+            }
+            textarea{
+                width:100%;
+                height:100px
+            }
+            button{
+                margin-top:10px;
+                padding:10px 20px;
+                background:#0077cc;
+                color:#fff;
+                border:none
+            }
+        </style>
+    </head>
+    <body>
 
-<h1 align="center">School Renovation (Agile Project)</h1>
-<div class="project">
-<img src="../static/img/renovation.png">
+        <h1 align="center">School Renovation (Agile Project)</h1>
+        <div class="project">
+            <img src="../static/img/renovation.png">
 
-<div class="about">
-<p>This school renovation project followed an agile approach, allowing continuous improvements based on stakeholder feedback. Work included classroom upgrades, roofing repairs, painting, electrical installations, and improved sanitation facilities to enhance the learning environment.</p>
-</div>
-</div>
-<div class="review">
-<h2>Leave a Review</h2>
-<div class="stars">
-<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-</div>
-<textarea placeholder="Share your experience..."></textarea>
-<button>Submit Review</button>
-</div>
+            <div class="about">
+                <p>This school renovation project followed an agile approach, allowing continuous improvements based on stakeholder feedback. Work included classroom upgrades, roofing repairs, painting, electrical installations, and improved sanitation facilities to enhance the learning environment.</p>
+            </div>
+        </div>
+        <div class="review">
+                <h2>Leave a Review</h2>
+            <div class="stars">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <textarea placeholder="Share your experience..."></textarea>
+            <button>Submit Review</button>
+        </div>
 
-<script>
-const s=document.querySelectorAll(".stars span");
-s.forEach((st,i)=>st.onclick=()=>{
-s.forEach(x=>x.classList.remove("active"));
-for(let j=0;j<=i;j++)s[j].classList.add("active");
-});
-</script>
+        <script>
+            const s=document.querySelectorAll(".stars span");
+            s.forEach((st,i)=>st.onclick=()=>{
+            s.forEach(x=>x.classList.remove("active"));
+            for(let j=0;j<=i;j++)s[j].classList.add("active");
+            });
+        </script>
 
-</body>
+    </body>
 </html>
