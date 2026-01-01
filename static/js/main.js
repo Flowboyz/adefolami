@@ -1,12 +1,42 @@
 // ===========================
 // MOBILE MENU TOGGLE
 // ===========================
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+const menuToggle = document.getElementById('nav-toggle');
+const navLinks = document.querySelector('.nav-links');
 
-if (menuToggle) {
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
+if (menuToggle && navLinks) {
+  // ensure initial aria state and symbol
+  menuToggle.setAttribute('aria-expanded', 'false');
+  if (!menuToggle.textContent.trim()) menuToggle.textContent = '☰';
+
+  menuToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('show');
+    menuToggle.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    // swap symbol for a clear affordance
+    menuToggle.textContent = open ? '✕' : '☰';
+  });
+
+  // close when clicking a link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('show');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰';
+    });
+  });
+
+  // close on outside click
+  document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)){
+      if (navLinks.classList.contains('show')){
+        navLinks.classList.remove('show');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.textContent = '☰';
+      }
+    }
   });
 }
 
@@ -33,7 +63,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         behavior: "smooth"
       });
 
-      navLinks.classList.remove("active");
+      if (navLinks) navLinks.classList.remove('show');
+      if (menuToggle) { menuToggle.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false'); }
     }
   });
 });
@@ -253,5 +284,4 @@ window.addEventListener("resize", () => {
   slider.style.transform = `translateX(-${index * slideWidth()}px)`;
 });
 
-let contactForm = document.querySelector('.contact')
-function
+// nav link click handlers are handled when the menu is initialized above - no-op here to avoid errors.

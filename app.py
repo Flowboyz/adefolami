@@ -25,7 +25,7 @@ def save_contact(data):
 @app.route('/')
 def index():
  return render_template('index.html')
- return render_template('hotelmotif.html')
+ 
 
 
 @app.route('/contact', methods=['POST'])
@@ -61,6 +61,30 @@ def contact():
     except Exception as e:
         return jsonify({'ok': False, 'error': 'Server error.'}), 500
 
+@app.route('/borehole')
+def borehole():
+    return render_template('borehole.html')
+
+@app.route('/borehole', methods=['POST'])
+def button():
+    return("your review has been submitted")
+    
+
+
+@app.route('/hotelmotif')
+def hotel():
+    return render_template('hotelmotif.html')
+
+
+@app.route('/renovation')
+def renovation():
+    return render_template('renovation.html')
+
+
+@app.route('/roadconstruct')
+def road():
+    return render_template('roadconstruct.html')
+    
 
 if __name__ == '__main__':
  app.run(debug=True)

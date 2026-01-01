@@ -111,8 +111,8 @@
         <figure class="proj reveal"><img src="../static/img/road.png" alt="Road Construction"><figcaption>ROAD CONSTRUCTION</figcaption></figure>
         <figure class="proj reveal"><img src="../static/img/borehole.png" alt="Borehole construction"><figcaption>BOREHOLE DRILLING</figcaption></figure>
         <figure class="proj reveal"><img src="../static/img/renovation.png" alt="School renovation"><figcaption>SCHOOL RENOVATION(AGILE PROJECT)</figcaption></figure>
-        <figure class="proj reveal"><img src="../static/img/renovation.png" alt="School renovation"><figcaption>SCHOOL RENOVATION(AGILE PROJECT)</figcaption></figure>
-        <figure class="proj reveal"><img src="../static/img/renovation.png" alt="School renovation"><figcaption>SCHOOL RENOVATION(AGILE PROJECT)</figcaption></figure>
+        <figure class="proj reveal"><img src="../static/img/working-housing-project.jpg" alt="School renovation"><figcaption>SCHOOL RENOVATION(AGILE PROJECT)</figcaption></figure>
+        <figure class="proj reveal"><img src="../static/img/box.jpg" alt="School renovation"><figcaption>SCHOOL RENOVATION(AGILE PROJECT)</figcaption></figure>
     </div>
 </section>
 
@@ -247,14 +247,14 @@
 
     <!-- Duplicate until slide 10 -->
     <!-- You can just change text and image -->
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert3.jpg"></div><div class="cert-details"><h3>Safety Compliance Certificate</h3><p>Demonstrates strict adherence to industrial safety regulations.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert4.jpg"></div><div class="cert-details"><h3>Environmental Compliance</h3><p>Certified environmental sustainability practices.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert5.jpg"></div><div class="cert-details"><h3>Construction License</h3><p>Government-issued construction operating license.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert6.jpg"></div><div class="cert-details"><h3>Project Excellence Award</h3><p>Awarded for outstanding engineering execution.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert7.jpg"></div><div class="cert-details"><h3>Client Trust Certificate</h3><p>Recognition for consistent client satisfaction.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert8.jpg"></div><div class="cert-details"><h3>Professional Membership</h3><p>Registered member of engineering professional bodies.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert9.jpg"></div><div class="cert-details"><h3>Quality Assurance</h3><p>Proof of quality-controlled construction process.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="static/img/cert10.jpg"></div><div class="cert-details"><h3>Operational Permit</h3><p>Legal permit to operate engineering services.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert1.jpg"></div><div class="cert-details"><h3>Safety Compliance Certificate</h3><p>Demonstrates strict adherence to industrial safety regulations.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert3.jpg"></div><div class="cert-details"><h3>Environmental Compliance</h3><p>Certified environmental sustainability practices.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert4.jpg"></div><div class="cert-details"><h3>Construction License</h3><p>Government-issued construction operating license.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert6.jpg"></div><div class="cert-details"><h3>Project Excellence Award</h3><p>Awarded for outstanding engineering execution.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert7.jpg"></div><div class="cert-details"><h3>Client Trust Certificate</h3><p>Recognition for consistent client satisfaction.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert8.jpg"></div><div class="cert-details"><h3>Professional Membership</h3><p>Registered member of engineering professional bodies.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert9.jpg"></div><div class="cert-details"><h3>Quality Assurance</h3><p>Proof of quality-controlled construction process.</p></div></div>
+    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert10.jpg"></div><div class="cert-details"><h3>Operational Permit</h3><p>Legal permit to operate engineering services.</p></div></div>
 
   </div>
 
@@ -291,18 +291,22 @@
                 </div>
         </div>
 
-            <form>
+            <form class="contact-form">
                 <div class="form-divsion">
                 <label>Name:</label>
                     <input name="name" type="text" id="name" required></div>
                 <div class="form-divsion">
-                    <label for="email">Email:</label>
+                    <label for="email" autocomplete="email">Email:</label>
                     <input name="email" type="email" id="email" required></label></div>
                     <div class="form-divsion">
                 <label for="message">Message:</label>
                     <textarea name="message" rows="5" id="message" required ></textarea></label></div>
                     <div class="form-divsion2"></div>
-                <button type="submit" class="btn">Send Message</button>
+                <button type="submit" class="btn" popovertarget="sending">Send Message</button>
+                <div id="sending" popover>
+                  <button popovertarget="sending">&times;</button>
+                  <h3>Your message is recieved</h3>
+                  <p>We will get back to you as soon as possible</p>
                 </div>
                 <p id="form-status" role="status" aria-live="polite"></p>
             </form> 
