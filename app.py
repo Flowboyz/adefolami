@@ -65,7 +65,7 @@ def contact():
 def borehole():
     return render_template('borehole.html')
 
-@app.route('/borehole', methods=['POST'])
+@app.route('/', methods=['POST'])
 def button():
     return("your review has been submitted")
     

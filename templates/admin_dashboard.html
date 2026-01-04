@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    <a href="/admin/logout">Logout</a>
+
+    <hr>
+
+    {% if contacts %}
+        {% for c in contacts %}
+            <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+                <strong>Name:</strong> {{ c.name }}<br>
+                <strong>Email:</strong> {{ c.email }}<br>
+                <strong>Message:</strong> {{ c.message }}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No messages yet.</p>
+    {% endif %}
+</body>
+</html>
