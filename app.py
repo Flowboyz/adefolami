@@ -1,9 +1,15 @@
 from flask import Flask, render_template, request, jsonify, url_for
 from email_validator import validate_email, EmailNotValidError
+from whatsapp import send_whatsapp_message
+from emailer import send_email
+from admin import admin_bp
 import json, os
 
 
 app = Flask(__name__)
+app.secret_key = "FLOWBOYZ_SECRET_KEY"  # Replace with a secure key in production
+
+app.register_blueprint(admin_bp)
 
 
 CONTACTS_FILE = 'contacts.json'
@@ -36,29 +42,40 @@ def contact():
         email = payload.get('email','').strip()
         message = payload.get('message','').strip()
 
-
         if not name or not email or not message:
             return jsonify({'ok': False, 'error': 'All fields are required.'}), 400
 
-
         try:
-             validate_email(email)
-        except EmailNotValidError as e:
-             return jsonify({'ok': False, 'error': 'Invalid email address.'}), 400
-
+            validate_email(email)
+        except EmailNotValidError:
+            return jsonify({'ok': False, 'error': 'Invalid email address.'}), 400
 
         contact_record = {
-        'name': name,
-        'email': email,
-        'message': message
+            'name': name,
+            'email': email,
+            'message': message
         }
-
 
         save_contact(contact_record)
 
+        # 🔔 NOTIFICATIONS (NON-BLOCKING)
+        try:
+            send_whatsapp_message(name, email, message)
+        except Exception as e:
+            print("WhatsApp failed:", e)
 
-        return jsonify({'ok': True, 'message': 'Thanks! We received your message.'})
+        try:
+            send_email(name, email, message)
+        except Exception as e:
+            print("Email failed:", e)
+
+        return jsonify({
+            'ok': True,
+            'message': 'Thanks! We received your message.'
+        })
+
     except Exception as e:
+        print("Server error:", e)
         return jsonify({'ok': False, 'error': 'Server error.'}), 500
 
 @app.route('/borehole')
