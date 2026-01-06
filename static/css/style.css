@@ -194,7 +194,7 @@ section, header{ scroll-margin-top: calc(var(--nav-height) + 12px); }
   height: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  gap: 50px;
   color: #fff;
 }
 #about h1{
@@ -213,9 +213,6 @@ section, header{ scroll-margin-top: calc(var(--nav-height) + 12px); }
   display: block;
   margin: 12px auto 0;
   border-radius: 3px;
-}
-.about-left{
-  padding: 0 40px;
 }
 
 .about-left h2{
@@ -662,7 +659,6 @@ section, header{ scroll-margin-top: calc(var(--nav-height) + 12px); }
 .contact{
   background-color:  rgb(163, 148, 77);
   padding: 40px 80px; /* reduced */
-  margin-bottom: 12px;
   animation: ani 3s linear infinite;
 } 
 @keyframes ani{
@@ -685,7 +681,7 @@ section, header{ scroll-margin-top: calc(var(--nav-height) + 12px); }
   height: 4px;
   background: var(--accent);
   display: block;
-  margin: 12px auto 0;
+  margin: 12px auto 12px;
   border-radius: 3px;
 }
 .contact-wrap{
@@ -704,7 +700,7 @@ section, header{ scroll-margin-top: calc(var(--nav-height) + 12px); }
   display: flex;
   flex-direction: column;
   gap: 20px;
-  top: 10;
+  top: 0;
   position: absolute;
   right: 20px;
   padding: 40px;
@@ -771,7 +767,6 @@ form button{
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 20px;
   /* background-image: url(../img/folami-logo.png);
 
   background-repeat: no-repeat;
