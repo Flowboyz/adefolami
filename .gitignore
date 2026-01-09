@@ -1,0 +1,17 @@
+# Virtual environment (ignore the entire folder)
+venv/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local databases / data
+contacts.db
+contacts.json
+
+# OS junk
+.DS_Store
+Thumbs.db

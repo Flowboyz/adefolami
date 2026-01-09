@@ -2,81 +2,137 @@
 <html>
     <head>
         <title>Road construction and repair</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
         <style>
-            body{
-                font-family:Arial;
-                margin:20px
-            }
-            .project{
-                display: flex;
-                justify-content: space-around; 
-                padding: 40px 80px;
-            }
-            img{
-                width:500px;
-                height: 500px;
-                display:block;
-                margin:auto;
-                border-radius:10px
-            }
-            .about{
-                max-width:600px;
-                margin:20px auto;
-                line-height: 3;
-                text-align:justify
-            }
-            .review{
-                max-width:100%;
-                margin:auto;
-                border-top:1px solid #ccc;
-                padding-top:20px;
-                text-align: center;
-            }
-            .stars span{
-                font-size:30px;
-                cursor:pointer;
-                color:#ccc
-            }
-            .stars .active{
-                color:gold
-            }
-            textarea{
-                width:100%;
-                height:100px
-            }
-            button{
-                margin-top:10px;
-                padding:10px 20px;
-                background:#0077cc;
-                color:#fff;
-                border:none
-            }
+          :root{ --accent:#0d6efd; --muted:#6c757d; --bg:#f8f9fa; --card:#ffffff; --radius:12px;}
+          *{box-sizing:border-box}
+          body{font-family:'Inter', Arial, sans-serif;margin:0;background:linear-gradient(180deg, #f8fafc 0%, #f3f6fb 100%);color:#1f2937;-webkit-font-smoothing:antialiased}
+          .container{max-width:1100px;margin:40px auto;padding:24px}
+          .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;background:var(--card);padding:24px;border-radius:var(--radius);box-shadow:0 8px 24px rgba(15,23,42,0.06)}
+          .project-image{width:100%;height:auto;max-height:480px;object-fit:cover;border-radius:10px}
+          .about{line-height:1.7;color:var(--muted);font-size:1rem}
+          h1{margin:0;font-size:1.75rem;color:#0b2447}
+          .badge{display:inline-block;background:linear-gradient(90deg,var(--accent),#0062cc);color:#fff;padding:6px 10px;border-radius:999px;font-weight:600;margin-bottom:10px}
+          .review{margin-top:28px;background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(15,23,42,0.04)}
+          .stars{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+          .stars span{font-size:1.6rem;cursor:pointer;color:#e9ecef;transition:color .12s ease,transform .08s ease}
+          .stars span:hover{transform:translateY(-3px)}
+          .stars span.selected{color:#ffb020}
+          textarea{width:100%;min-height:110px;padding:12px;border-radius:8px;border:1px solid #e6e9ee;resize:vertical;font-family:inherit}
+          .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;box-shadow:0 6px 18px rgba(13,110,253,0.12)}
+          .btn.secondary{background:#f1f5f9;color:#0b2447}
+          .meta{font-size:.9rem;color:var(--muted);margin-bottom:12px}
+          @media (max-width:800px){.hero{grid-template-columns:1fr}.container{margin:20px;padding:16px}}
         </style>
     </head>
     <body>
+      <div class="container">
+        <div class="badge">Road Construction</div>
+        <header style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px">
+          <h1>Road Construction and Repairs</h1>
+          <div class="meta">Ongoing • 2025 • Infrastructure</div>
+        </header>
 
-        <h1 align="center">ROAD CONSTRUCTION AND REPAIRS</h1>
-        <div class="project">
-            <img src="../static/img/road.png">
-
-            <div class="about">
-                <p>This borehole drilling project provided clean and sustainable water access. Geological surveys were conducted to determine water table depth, followed by drilling, casing, and pump installation. The project meets safety and environmental standards.</p>
-                </div></div>
-                <hr>
-                <div class="review">
-                    <h2>Leave a Review</h2>
-                <div class="stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <section class="hero" aria-labelledby="project-title">
+          <img src="../static/img/road.png" alt="road construction" class="project-image">
+          <div>
+            <h2 id="project-title" style="margin-top:0">Durable & Safe Roadworks</h2>
+            <p class="about">This road construction and repair project focused on durable, cost-effective materials and efficient execution to minimize disruption. Works included resurfacing, drainage improvements, signage, and safety upgrades to improve traffic flow and community access.</p>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="btn">View Details</button>
+              <button class="btn secondary" onclick="window.location.href='/'">Back Home</button>
             </div>
-            <textarea placeholder="Your review..."></textarea>
-            <button>Submit Review</button>
-        </div>
+          </div>
+        </section>
+
+        <section class="review" aria-label="Leave a review">
+          <h2 style="text-align:center;margin-top:0">Leave a Review</h2>
+          <div class="stars" id="star-rating" role="radiogroup" aria-label="Rating">
+            <span role="radio" aria-checked="false" tabindex="0" data-value="1">★</span>
+            <span role="radio" aria-checked="false" tabindex="0" data-value="2">★</span>
+            <span role="radio" aria-checked="false" tabindex="0" data-value="3">★</span>
+            <span role="radio" aria-checked="false" tabindex="0" data-value="4">★</span>
+            <span role="radio" aria-checked="false" tabindex="0" data-value="5">★</span>
+          </div>
+          <textarea placeholder="Your review..." aria-label="Review text"></textarea>
+          <div style="text-align:center">
+            <button class="btn" onclick="submitReview()">Submit Review</button>
+          </div>
+        </section>
+      </div>
 
         <script>
-            document.querySelectorAll(".stars span").forEach((s,i)=>{
-            s.onclick=()=>{document.querySelectorAll(".stars span").forEach(st=>st.classList.remove("active"));
-            for(let j=0;j<=i;j++)document.querySelectorAll(".stars span")[j].classList.add("active");
-            }});
+          (function(){
+            const starContainer = document.getElementById('star-rating');
+            const stars = starContainer.querySelectorAll('span');
+            const textarea = document.querySelector('textarea');
+            let rating = 0;
+
+            function updateStars(r) {
+              stars.forEach(star => {
+                const val = Number(star.getAttribute('data-value'));
+                if(val <= r){
+                  star.classList.add('selected');
+                  star.setAttribute('aria-checked','true');
+                } else {
+                  star.classList.remove('selected');
+                  star.setAttribute('aria-checked','false');
+                }
+              });
+            }
+
+            stars.forEach(star => {
+              star.addEventListener('click', () => {
+                rating = Number(star.dataset.value);
+                updateStars(rating);
+              });
+              star.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter' || e.key === ' '){
+                  e.preventDefault();
+                  rating = Number(star.dataset.value);
+                  updateStars(rating);
+                  star.focus();
+                } else if(e.key === 'ArrowRight' || e.key === 'ArrowUp'){
+                  e.preventDefault();
+                  const next = Math.min(5, Number(star.dataset.value) + 1);
+                  rating = next;
+                  updateStars(rating);
+                  stars[next-1].focus();
+                } else if(e.key === 'ArrowLeft' || e.key === 'ArrowDown'){
+                  e.preventDefault();
+                  const prev = Math.max(1, Number(star.dataset.value) - 1);
+                  rating = prev;
+                  updateStars(rating);
+                  stars[prev-1].focus();
+                }
+              });
+              star.addEventListener('mouseover', () => {
+                const hoverVal = Number(star.dataset.value);
+                stars.forEach(s => {
+                  if(Number(s.dataset.value) <= hoverVal) s.classList.add('selected');
+                  else s.classList.remove('selected');
+                });
+              });
+              star.addEventListener('mouseout', () => updateStars(rating));
+            });
+
+            window.submitReview = function submitReview() {
+              const reviewText = textarea.value.trim();
+              if(!reviewText) {
+                alert("Please write a review before submitting.");
+                textarea.focus();
+                return;
+              }
+              alert(`Thank you for your review!\nRating: ${rating || '0'} stars\n\n${reviewText}`);
+              textarea.value = "";
+              rating = 0;
+              updateStars(0);
+            };
+
+            // make stars keyboard focusable
+            stars.forEach((s, i) => s.tabIndex = 0);
+            updateStars(0);
+          })();
         </script>
 
     </body>
