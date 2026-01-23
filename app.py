@@ -102,6 +102,10 @@ def renovation():
 def road():
     return render_template('roadconstruct.html')
     
+@app.route('/team')
+def team():
+    return render_template('team.html')
+    
 
 if __name__ == '__main__':
  app.run(debug=True)
