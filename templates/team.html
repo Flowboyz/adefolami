@@ -8,61 +8,108 @@
         body{
             background-color: rgb(128, 0, 0);
         }
-        body p{
+        .par{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        h1{
+            text-align: center;
+            color: #fff;
+        }
+        .par1{
             color: white;
-            text-align: justify;
-            border: 3px solid black;
-            font: 18px;
-            margin: 40px 300px 30px 300px;
-            padding: 2px 2px 2px 2px ;
+            text-align: flex-end;
+            width: 450px;
+            height: 350px;
+            box-shadow: 0 0 15px rgba(202, 139, 139, 0.8);
+            border-radius: 10px;
+            font: 24px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            padding: 10px 15px;
+            line-height: 1.6em;
+            margin-bottom: 10px;
+        }
+        .par1:hover{
+            transform: scale(1.03);
+        }
+        .par1 img{
+            width: 100%;
+            height: 60%;
+            border-radius: 6px;
+        }
+        @media (max-width: 477px) {
+            
         }
     </style>
 </head>
 <body>
+    <h1>TEAM MEMBERS</h1>
+    <div class="par">
+        <div class="par1">
+            <img src="/static/img/all-black-team-engineers-comparing-solar-panels-designs-laptop.jpg" alt="Engr. Aina Adebisi E. MNSE,
+MNICE, FOSHA (COREN)">
     <p>Engr. Aina Adebisi E. MNSE,
-MNICE, FOSHA (COREN)
-Title: Director / CEO
-Experience: 10 years</p>
+MNICE, FOSHA (COREN)<br>
+Title: Director / CEO<br>
+Experience: 10 years</p></div>
+<div class="par1">
+    <img src="" alt="Engr. Ayeni Babatunde G.">
 <p>
     Engr. Ayeni Babatunde G.
-MNSE, MNICE (COREN)
-Title: Director, Projects
+MNSE, MNICE (COREN)<br>
+Title: Director, Projects<br>
 Experience: 10 years
-</p>
+</p></div>
+<div class="par1">
+    <img src="" alt="Oyewumi Ayodele">
 <p>
-    Oyewumi Ayodele
+    Oyewumi Ayodele<br>
 Title: Project Manager
-(HND Architecture)
+(HND Architecture)<br>
 Experience: 6 years
-</p>
+</p></div>
+<div class="par1">
+    <img src="" alt="Adebayo Kehinde">
 <p>
-    Adebayo Kehinde
-Title: Project / Resident
-Engineer (B.Eng Civil)
+    Adebayo Kehinde<br>
+Title: Project / Resident<br>
+Engineer (B.Eng Civil)<br>
 Experience: 9 years
-</p>
+</p></div>
+<div class="par1">
+    <img src="" alt="Ojo Oluwatosin R.">
 <p>
-    Ojo Oluwatosin R.
+    Ojo Oluwatosin R.<br>
 Title: Site Supervisor (B.Sc Ed.
-Computer Science)
+Computer Science)<br>
 Experience: 6 years
-</p>
+</p></div>
+<div class="par1">
+    <img src="" alt="Abiodun Boluwaji Olajide">
 <p>
-    Abiodun Boluwaji Olajide
+    Abiodun Boluwaji Olajide<br>
 Title: Store Keeper (HND
-Computer Science)
+Computer Science)<br>
 Experience: 7 years
-</p>
+</p></div>
+<div class="par1">
+    <img src="" alt="Ibrahim Laisi T.">
 <p>
-    Ibrahim Laisi T.
+    Ibrahim Laisi T.<br>
 Title: Builder (ND Building
-Technology)
+Technology)<br>
 Experience: 6 years
-</p>
+</p></div>
+<div class="par1">
+    <img src="" alt="Adelabu M. Olaoye">
 <p>
-    Adelabu M. Olaoye
-    Title: Foreman
+    Adelabu M. Olaoye<br>
+    Title: Foreman<br>
     Experience: 12 years
-</p>
+</p></div>
+</div>
 </body>
 </html>
