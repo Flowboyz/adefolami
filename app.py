@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, url_for
 from email_validator import validate_email, EmailNotValidError
-# from whatsapp import send_whatsapp_message
+from whatsapp import send_whatsapp_message
 from emailer import send_email
 from admin import admin_bp
 import json, os
