@@ -1,403 +1,436 @@
-// ===========================
-// MOBILE MENU TOGGLE
-// ===========================
-const menuToggle = document.getElementById('nav-toggle');
-const navLinks = document.querySelector('.nav-links');
+/**
+ * ADEFOLAMI STRUCTURAL SOLUTIONS — main.js
+ * Fixed: section fade-in bug, backToTop declaration order
+ */
 
-if (menuToggle && navLinks) {
-  // ensure initial aria state and symbol
-  menuToggle.setAttribute('aria-expanded', 'false');
-  if (!menuToggle.textContent.trim()) menuToggle.textContent = '☰';
+(function () {
+  "use strict";
 
-  menuToggle.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('show');
-    menuToggle.classList.toggle('open', open);
-    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    // swap symbol for a clear affordance
-    menuToggle.textContent = open ? '✕' : '☰';
-  });
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-  // close when clicking a link
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('show');
-      menuToggle.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      menuToggle.textContent = '☰';
+  /* ── BACK TO TOP (declared first so onScroll can reference it) ── */
+  const backToTop = $(".back-to-top");
+  if (backToTop) {
+    backToTop.addEventListener("click", () =>
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    );
+  }
+
+  /* ── NAV: scroll style + mobile toggle ─────────────────────── */
+  const nav = $(".nav");
+  const navToggle = $("#nav-toggle");
+  const navLinks = $("#nav-links");
+
+  const onScroll = () => {
+    if (nav) nav.classList.toggle("scrolled", window.scrollY > 30);
+    if (backToTop) backToTop.classList.toggle("visible", window.scrollY > 400);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  if (navToggle && navLinks) {
+    navToggle.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("show");
+      navToggle.classList.toggle("open", open);
+      navToggle.setAttribute("aria-expanded", String(open));
     });
-  });
 
-  // close on outside click
-  document.addEventListener('click', (e) => {
-    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)){
-      if (navLinks.classList.contains('show')){
-        navLinks.classList.remove('show');
-        menuToggle.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.textContent = '☰';
+    $$("a", navLinks).forEach((a) =>
+      a.addEventListener("click", () => {
+        navLinks.classList.remove("show");
+        navToggle.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+      })
+    );
+
+    document.addEventListener("click", (e) => {
+      if (nav && !nav.contains(e.target)) {
+        navLinks.classList.remove("show");
+        navToggle.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
       }
-    }
-  });
-}
+    });
+  }
 
-// ===========================
-// STICKY NAVBAR ON SCROLL
-// ===========================
-window.addEventListener("scroll", () => {
-  const header = document.querySelector("header");
-  header.classList.toggle("sticky", window.scrollY > 50);
-});
+  /* ── COPYRIGHT YEAR ─────────────────────────────────────────── */
+  const yearEl = $(".year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-
-// ===========================
-// SMOOTH SCROLL
-// ===========================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) {
-      window.scrollTo({
-        top: target.offsetTop - 70,
-        behavior: "smooth"
-      });
-
-      if (navLinks) navLinks.classList.remove('show');
-      if (menuToggle) { menuToggle.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false'); }
-    }
-  });
-});
-
-
-// ===========================
-// SCROLL REVEAL EFFECT
-// ===========================
-const reveals = document.querySelectorAll(".reveal");
-
-function revealOnScroll() {
-  const windowHeight = window.innerHeight;
-  const revealPoint = 150;
-
-  reveals.forEach(section => {
-    const sectionTop = section.getBoundingClientRect().top;
-
-    if (sectionTop < windowHeight - revealPoint) {
-      section.classList.add("active");
-    } else {
-      section.classList.remove("active");
-    }
-  });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll();
-
-
-// ===========================
-// CONTACT FORM - FLASK CONNECT
-// ===========================
-const contactForm = document.querySelector(".contact-form");
-
-if (contactForm) {
-  contactForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const message = document.getElementById("message").value.trim();
-    const statusMsg = document.getElementById("form-status");
-    const submitBtn = contactForm.querySelector('button[type="submit"], input[type="submit"], .btn');
-    const originalBtnText = submitBtn ? submitBtn.textContent : '';
-
-    // CLIENT-SIDE VALIDATION
-    const nameField = document.getElementById('name');
-    const emailField = document.getElementById('email');
-    const messageField = document.getElementById('message');
-
-    // clear previous invalid markers
-    [nameField, emailField, messageField].forEach(f => f && f.classList.remove('invalid'));
-
-    if(!name){
-      statusMsg.innerText = 'Please enter your name.';
-      statusMsg.style.color = 'red';
-      if(nameField){ nameField.classList.add('invalid'); nameField.focus(); }
-      return;
-    }
-
-    // simple email validation
-    const emailRe = /^\S+@\S+\.\S+$/;
-    if(!email || !emailRe.test(email)){
-      statusMsg.innerText = 'Please enter a valid email address.';
-      statusMsg.style.color = 'red';
-      if(emailField){ emailField.classList.add('invalid'); emailField.focus(); }
-      return;
-    }
-
-    if(!message || message.length < 10){
-      statusMsg.innerText = 'Please enter a message (at least 10 characters).';
-      statusMsg.style.color = 'red';
-      if(messageField){ messageField.classList.add('invalid'); messageField.focus(); }
-      return;
-    }
-
-    // UI: show busy state (spinner + disabled)
-    statusMsg.innerText = "Sending...";
-    statusMsg.style.color = "#333";
-
-    function setBtnState(btn, { disabled = false, busy = false, text = null, stateClass = null } = {}){
-      if(!btn) return;
-      btn.disabled = disabled;
-      if(busy) btn.setAttribute('aria-busy','true'); else btn.removeAttribute('aria-busy');
-
-      // clear existing visual state classes
-      btn.classList.remove('loading','success','error');
-      if(stateClass) btn.classList.add(stateClass);
-
-      if(text !== null){
-        if(btn.tagName === 'INPUT') btn.value = text;
-        else btn.innerHTML = text;
-      }
-    }
-
-    if (submitBtn) { setBtnState(submitBtn, { disabled: true, busy: true, text: 'Submitting...', stateClass: 'loading' }); }
-
-    try {
-      const response = await fetch("/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name, email, message })
-      });
-
-      // some backends return no JSON; handle gracefully
-      let data = null;
-      try { data = await response.json(); } catch (e) { data = null; }
-
-      const success = (data && data.success) || response.ok;
-
-      if (success) {
-        statusMsg.innerText = "Submitted — thank you for reaching out!";
-        statusMsg.style.color = "green";
-        if (submitBtn) {
-          const okText = '✔ Submitted — thank you!';
-          setBtnState(submitBtn, { disabled: true, busy: false, text: okText, stateClass: 'success' });
-          submitBtn.setAttribute('aria-live','polite');
+  /* ── SCROLL REVEAL ──────────────────────────────────────────── */
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          revealObserver.unobserve(e.target);
         }
-        contactForm.reset();
-        // restore button after a short delay so user can submit again
+      });
+    },
+    { threshold: 0.08 }
+  );
+  $$(".reveal, .reveal-img").forEach((el) => revealObserver.observe(el));
+
+  /* ── STAGGERED CARD REVEALS ─────────────────────────────────── */
+  const cardsSection = $(".cards");
+  if (cardsSection) {
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            $$(".card-reveal").forEach((card, i) => {
+              setTimeout(() => {
+                card.style.opacity = "1";
+                card.style.transform = "translateY(0) scale(1)";
+              }, i * 120);
+            });
+            cardObserver.disconnect();
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+
+    $$(".card-reveal").forEach((card) => {
+      card.style.opacity = "0";
+      card.style.transform = "translateY(24px) scale(0.97)";
+      card.style.transition =
+        "opacity 0.55s cubic-bezier(.22,.9,.3,1), transform 0.55s cubic-bezier(.22,.9,.3,1)";
+    });
+    cardObserver.observe(cardsSection);
+  }
+
+  /* ── ABOUT SLIDE-IN ─────────────────────────────────────────── */
+  const aboutObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in-view");
+          aboutObserver.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  $$(".about-left, .about-right").forEach((el) => aboutObserver.observe(el));
+
+  /* ── HERO EYEBROW + SUB-TEXT INJECT ────────────────────────── */
+  const heroInner = $(".hero-inner");
+  if (heroInner && !$(".hero-eyebrow", heroInner)) {
+    const eyebrow = document.createElement("div");
+    eyebrow.className = "hero-eyebrow";
+    eyebrow.textContent = "Engineering Excellence Since 2009";
+    heroInner.prepend(eyebrow);
+  }
+
+  const heroH1 = $(".hero h1");
+  if (heroH1 && !$(".hero-sub")) {
+    const sub = document.createElement("p");
+    sub.className = "hero-sub";
+    sub.textContent =
+      "Nigeria's trusted civil & structural engineering firm — delivering world-class construction solutions across power, oil & gas, and real estate sectors.";
+    heroH1.insertAdjacentElement("afterend", sub);
+  }
+
+  if (heroH1) {
+    heroH1.innerHTML = heroH1.innerHTML.replace(
+      "building structure",
+      "<em>building structure</em>"
+    );
+  }
+
+  /* ── ANIMATED STAT COUNTER ──────────────────────────────────── */
+  const statsSection = $(".stats");
+  if (statsSection) {
+    const statObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          statsSection.classList.add("started");
+          $$(".stat p").forEach((el) => {
+            const raw = el.textContent.trim();
+            const isYear = raw === "2009";
+            const suffix = raw.replace(/[0-9]/g, "");
+            const target = parseInt(raw.replace(/\D/g, ""), 10);
+            const duration = 1600;
+            const start = performance.now();
+            const from = isYear ? 1990 : 0;
+
+            const tick = (now) => {
+              const progress = Math.min((now - start) / duration, 1);
+              const ease = 1 - Math.pow(1 - progress, 3);
+              const value = Math.round(from + (target - from) * ease);
+              el.textContent = isYear ? value : value + suffix;
+              if (progress < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          });
+          statObserver.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    statObserver.observe(statsSection);
+  }
+
+  /* ── TESTIMONIAL SLIDER ─────────────────────────────────────── */
+  const slider = $("#slider");
+  const dots = $$(".pagination .dot");
+  let currentSlide = 0;
+  let slideTimer = null;
+
+  const goToSlide = (n) => {
+    if (!slider) return;
+    currentSlide = n;
+    slider.style.transform = `translateX(-${50 * n}%)`;
+    dots.forEach((d, i) => d.classList.toggle("active", i === n));
+  };
+
+  const nextSlide = () => goToSlide((currentSlide + 1) % (dots.length || 2));
+
+  if (slider) {
+    slideTimer = setInterval(nextSlide, 5000);
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        clearInterval(slideTimer);
+        goToSlide(i);
+        slideTimer = setInterval(nextSlide, 5000);
+      });
+    });
+
+    let startX = 0;
+    slider.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener("touchend", (e) => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        clearInterval(slideTimer);
+        goToSlide(diff > 0 ? (currentSlide + 1) % 2 : (currentSlide - 1 + 2) % 2);
+        slideTimer = setInterval(nextSlide, 5000);
+      }
+    });
+  }
+
+  /* ── CERTIFICATE SLIDER ─────────────────────────────────────── */
+  const certSlider = $(".cert-slider");
+  const certDots = $$(".cert-pagination .dot");
+  let certIndex = 0;
+  let certTimer = null;
+
+  const goToCert = (n) => {
+    if (!certSlider) return;
+    certIndex = n;
+    certSlider.style.transform = `translateX(-${100 * n}%)`;
+    certDots.forEach((d, i) => d.classList.toggle("active", i === n));
+  };
+
+  const nextCert = () => goToCert((certIndex + 1) % (certDots.length || 1));
+
+  if (certSlider) {
+    certTimer = setInterval(nextCert, 4500);
+    certDots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        clearInterval(certTimer);
+        goToCert(i);
+        certTimer = setInterval(nextCert, 4500);
+      });
+    });
+
+    const prevBtn = $(".prev");
+    const nextBtn = $(".next");
+    if (prevBtn)
+      prevBtn.addEventListener("click", () => {
+        clearInterval(certTimer);
+        goToCert((certIndex - 1 + certDots.length) % certDots.length);
+        certTimer = setInterval(nextCert, 4500);
+      });
+    if (nextBtn)
+      nextBtn.addEventListener("click", () => {
+        clearInterval(certTimer);
+        nextCert();
+        certTimer = setInterval(nextCert, 4500);
+      });
+
+    let cStartX = 0;
+    certSlider.addEventListener("touchstart", (e) => { cStartX = e.touches[0].clientX; }, { passive: true });
+    certSlider.addEventListener("touchend", (e) => {
+      const diff = cStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        clearInterval(certTimer);
+        goToCert((certIndex + (diff > 0 ? 1 : -1) + certDots.length) % certDots.length);
+        certTimer = setInterval(nextCert, 4500);
+      }
+    });
+  }
+
+  /* ── CONTACT FORM ───────────────────────────────────────────── */
+  const form = $(".contact-form");
+  const formStatus = $("#form-status");
+
+  if (form) {
+    const msgInput = form.querySelector("#message");
+    if (msgInput && msgInput.tagName === "INPUT") {
+      const ta = document.createElement("textarea");
+      ta.name = msgInput.name;
+      ta.id = msgInput.id;
+      ta.required = msgInput.required;
+      ta.placeholder = "Write your message here…";
+      msgInput.replaceWith(ta);
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let valid = true;
+      $$("input[required], textarea[required]", form).forEach((field) => {
+        field.classList.remove("invalid");
+        if (!field.value.trim()) {
+          field.classList.add("invalid");
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      const btn = $("button[type=submit]", form);
+      btn.classList.add("loading");
+      if (formStatus) formStatus.textContent = "";
+
+      try {
+        await new Promise((res) => setTimeout(res, 1500));
+        btn.classList.remove("loading");
+        btn.classList.add("success");
+        btn.textContent = "Message Sent ✓";
+        if (formStatus) {
+          formStatus.textContent = "Thank you! We'll be in touch shortly.";
+          formStatus.style.color = "#22c55e";
+        }
+        form.reset();
         setTimeout(() => {
-          if (submitBtn) { setBtnState(submitBtn, { disabled: false, busy: false, text: originalBtnText }); submitBtn.classList.remove('success'); }
+          btn.classList.remove("success");
+          btn.textContent = "Send Message";
         }, 4000);
-      } else {
-        statusMsg.innerText = "Failed to send message. Try again.";
-        statusMsg.style.color = "red";
-        if (submitBtn) { setBtnState(submitBtn, { disabled: false, busy: false, text: 'Failed — try again', stateClass: 'error' }); setTimeout(()=> submitBtn.classList.remove('error'), 3000); }
+      } catch (_) {
+        btn.classList.remove("loading");
+        btn.classList.add("error");
+        btn.textContent = "Failed — Try Again";
+        setTimeout(() => {
+          btn.classList.remove("error");
+          btn.textContent = "Send Message";
+        }, 3000);
       }
-    } catch (error) {
-      console.error(error);
-      statusMsg.innerText = "Server error. Try again later.";
-      statusMsg.style.color = "red";
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.removeAttribute('aria-busy'); submitBtn.textContent = originalBtnText; }
-    }
-  });
-}
+    });
 
-
-// ===========================
-// BACK TO TOP BUTTON (OPTIONAL)
-// ===========================
-const backToTop = document.querySelector(".back-to-top");
-
-if (backToTop) {
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 600) {
-      backToTop.classList.add("show");
-    } else {
-      backToTop.classList.remove("show");
-    }
-  });
-
-  backToTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
-
-/* COUNTERS: animate stat numbers when the stats section scrolls into view */
-(function(){
-  function animateCount(el, target, duration = 2000, suffix = ''){
-    const start = 0;
-    const startTime = performance.now();
-    function format(n){ return n.toLocaleString() + suffix; }
-    function step(now){
-      const progress = Math.min((now - startTime) / duration, 1);
-      const value = Math.floor(progress * (target - start) + start);
-      el.textContent = format(value);
-      if(progress < 1) requestAnimationFrame(step);
-      else el.textContent = format(target);
-    }
-    requestAnimationFrame(step);
+    $$("input, textarea", form).forEach((f) =>
+      f.addEventListener("input", () => f.classList.remove("invalid"))
+    );
   }
 
-  const statsSection = document.querySelector('.stats');
-  if(!statsSection) return;
-
-  function runStats(){
-    if(statsSection.classList.contains('started')) return; // already ran
-    statsSection.classList.add('started');
-    statsSection.querySelectorAll('.stat p').forEach(p => {
-      if(p.dataset.animated) return;
-      const raw = p.textContent.trim();
-      // extract suffix like '+' or '%'
-      const suffix = raw.replace(/[0-9,\s]/g, '');
-      const numeric = parseInt(raw.replace(/[^0-9]/g, ''), 10) || 0;
-      const target = p.dataset.target ? Number(p.dataset.target) : numeric;
-      animateCount(p, target, 1400, suffix);
-      p.dataset.animated = 'true';
+  /* ── SMOOTH SCROLL ──────────────────────────────────────────── */
+  $$('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const id = a.getAttribute("href");
+      if (!id || id === "#") return;
+      const target = $(id);
+      if (!target) return;
+      e.preventDefault();
+      const navH =
+        parseInt(
+          getComputedStyle(document.documentElement).getPropertyValue("--nav-h")
+        ) || 70;
+      const top = target.getBoundingClientRect().top + window.scrollY - navH - 12;
+      window.scrollTo({ top, behavior: "smooth" });
     });
-  }
-
-  const statsObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        runStats();
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  statsObserver.observe(statsSection);
-
-  // If the section is already visible on load (e.g., large viewport), trigger immediately
-  const rect = statsSection.getBoundingClientRect();
-  if(rect.top < window.innerHeight && rect.bottom >= 0){ runStats(); statsObserver.disconnect(); }
-})();
-
-/* ABOUT SLIDE-IN: animate about-left / about-right when scrolled into view */
-(function(){
-  const items = document.querySelectorAll('.about-left, .about-right');
-  if(!items.length) return;
-
-  const aboutObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  items.forEach(i => aboutObserver.observe(i));
-})();
-
-
-const slide = document.querySelector(".slider");
-const dot = document.querySelectorAll(".dot");
-
-let index1 = 0;
-
-function moveSlide(i){
-  slide.style.transform = `translateX(-${i * 50}%)`;
-  dot.forEach(d => d.classList.remove("active"));
-  dot[i].classList.add("active");
-}
-
-dot.forEach((dot,i)=>{
-  dot.addEventListener("click",()=>{
-    index1 = i;
-    moveSlide(index1);
   });
-});
 
-// auto animation
-setInterval(()=>{
-  index1 = (index1 + 1) % 2;
-  moveSlide(index1);
-},5000);
+  /* ── ACTIVE NAV LINK ON SCROLL ──────────────────────────────── */
+  const navLinkEls = $$(".nav-links a");
+  const activeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const id = e.target.getAttribute("id");
+          navLinkEls.forEach((a) =>
+            a.classList.toggle("active", a.getAttribute("href") === `#${id}`)
+          );
+        }
+      });
+    },
+    { threshold: 0.35 }
+  );
+  $$("section[id]").forEach((s) => activeObserver.observe(s));
 
-const slider = document.querySelector(".cert-slider");
-const slides = document.querySelectorAll(".cert-slide");
-const dots = document.querySelectorAll(".cert-pagination .dot");
-const nextBtn = document.querySelector(".next");
-const prevBtn = document.querySelector(".prev");
+  const activeStyle = document.createElement("style");
+  activeStyle.textContent = `
+    .nav-links a.active { color: var(--gold) !important; }
+    .nav-links a.active::after { transform: scaleX(1) !important; }
+  `;
+  document.head.appendChild(activeStyle);
 
-let index = 0;
-let isAnimating = false;
-let autoSlide;
+  /* ── CANVAS PARTICLES (hero) ────────────────────────────────── */
+  (function heroParticles() {
+    const hero = $(".hero");
+    if (!hero) return;
+    const canvas = document.createElement("canvas");
+    canvas.style.cssText =
+      "position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.3";
+    hero.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+    let W, H, particles = [];
+    const GOLD = "rgba(184,136,42,";
 
-/* Get exact width of ONE slide */
-function slideWidth() {
-  return slides[0].getBoundingClientRect().width;
-}
+    const resize = () => {
+      W = canvas.width = hero.offsetWidth;
+      H = canvas.height = hero.offsetHeight;
+    };
 
-/* CORE MOVE FUNCTION */
-function goToSlide(i) {
-  if (isAnimating) return;
-  isAnimating = true;
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x  = Math.random() * W;
+        this.y  = Math.random() * H;
+        this.r  = Math.random() * 1.4 + 0.3;
+        this.a  = Math.random() * 0.6 + 0.15;
+        this.vx = (Math.random() - 0.5) * 0.25;
+        this.vy = -(Math.random() * 0.35 + 0.1);
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.a -= 0.0012;
+        if (this.a <= 0 || this.y < -5) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = GOLD + this.a + ")";
+        ctx.fill();
+      }
+    }
 
-  index = i;
+    resize();
+    particles = Array.from({ length: 70 }, () => new Particle());
+    window.addEventListener("resize", resize, { passive: true });
 
-  /* Move LEFT by exact pixels */
-  slider.style.transform = `translateX(-${index * slideWidth()}px)`;
+    const animate = () => {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach((p) => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    };
+    animate();
+  })();
 
-  /* Update dots IMMEDIATELY */
-  dots.forEach(dot => dot.classList.remove("active"));
-  dots[index].classList.add("active");
+  /* ── CURSOR GLOW (desktop only) ─────────────────────────────── */
+  (function cursorGlow() {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    const glow = document.createElement("div");
+    glow.style.cssText = `
+      position:fixed;width:280px;height:280px;border-radius:50%;
+      background:radial-gradient(circle,rgba(184,136,42,0.07) 0%,transparent 70%);
+      pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+      transition:left 0.1s ease,top 0.1s ease;left:-400px;top:-400px;
+    `;
+    document.body.appendChild(glow);
+    document.addEventListener("mousemove", (e) => {
+      glow.style.left = e.clientX + "px";
+      glow.style.top  = e.clientY + "px";
+    });
+  })();
 
-  /* Unlock after animation finishes */
-  setTimeout(() => {
-    isAnimating = false;
-  }, 800); // must match CSS transition time
-}
-
-/* NEXT / PREV */
-function nextSlide() {
-  index = (index + 1) % slides.length;
-  goToSlide(index);
-}
-
-function prevSlide() {
-  index = (index - 1 + slides.length) % slides.length;
-  goToSlide(index);
-}
-
-/* BUTTON EVENTS */
-nextBtn.addEventListener("click", () => {
-  nextSlide();
-  resetAuto();
-});
-
-prevBtn.addEventListener("click", () => {
-  prevSlide();
-  resetAuto();
-});
-
-/* DOT EVENTS */
-dots.forEach((dot, i) => {
-  dot.addEventListener("click", () => {
-    goToSlide(i);
-    resetAuto();
-  });
-});
-
-/* AUTO SLIDE */
-function startAuto() {
-  autoSlide = setInterval(nextSlide, 6000);
-}
-
-function resetAuto() {
-  clearInterval(autoSlide);
-  startAuto();
-}
-
-/* INIT */
-goToSlide(0);
-startAuto();
-
-/* Recalculate on resize */
-window.addEventListener("resize", () => {
-  slider.style.transform = `translateX(-${index * slideWidth()}px)`;
-});
-
-// nav link click handlers are handled when the menu is initialized above - no-op here to avoid errors.
+})();

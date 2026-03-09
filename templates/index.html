@@ -274,25 +274,26 @@
 
 
 <!-- CONTACT -->
-<section id="contact-form" class="contact">
+<section id="contact" class="contact">
     <h2>CONTACT US</h2>
     <div class="contact-wrap">
-         <div class="contact-info">
-            <h3 class="address">Address</h3>
-            <h4>Location: <span>Ekiti State Nigeria.</span></h4>
-            <p>F6, Shelter View Estate, Ado Ekiti</p>
-            <p>Tel: +2348061242484</p>
-            <p>Email:<a href="mailto:adefolamistructuralsolutions@gmail.com"> adefolamistructuresolutions@gmail.com</a></p>
-            <div class="follow">
-                <h4>Follow Us</h4>
-                <div class="icon">
-                    <a href="https://www.facebook.com/profile.php?id=61585844184780"><i class="fab fa-facebook"></i></a>
-                    <a href=""><i class="fab fa-twitter"></i></a>
-                    <a href=""><i class="fab fa-instagram"></i></a>
-                    <a href=""><i class="fab fa-pinterest"></i></a>
-                    <a href=""><i class="fab fa-youtube"></i></a>
-                </div>
+      <div class="contact-info">
+        <h3 class="address">Address</h3>
+        <h4>Location: <span>Ekiti State Nigeria.</span></h4>
+        <p>F6, Shelter View Estate, Ado Ekiti</p>
+        <p>Tel: +2348061242484</p>
+        <p>Email:<a href="mailto:adefolamistructuralsolutions@gmail.com"> adefolamistructuresolutions@gmail.com</a></p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <a href="https://www.facebook.com/profile.php?id=61585844184780"><i class="fab fa-facebook"></i></a>
+                <a href=""><i class="fab fa-twitter"></i></a>
+                <a href=""><i class="fab fa-instagram"></i></a>
+                <a href=""><i class="fab fa-pinterest"></i></a>
+                <a href=""><i class="fab fa-youtube"></i></a>
+            </div>
         </div>
+      </div>
 
             <form class="contact-form">
                 <div class="form-divsion">
@@ -368,27 +369,6 @@
 <div class="whatsapp" onclick="window.location.href='https://wa.me/2348061242484'"><i class="fab fa-whatsapp"></i></div>
 <span>Message us</span></div>
 <script src="../static/js/main.js"></script>
-<script>
-  (function(){
-    // reveal on scroll for elements with .reveal and images
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    },{threshold: 0.12});
-
-    // observe existing .reveal elements
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    // add a helper class for images and observe them so they animate when entering viewport
-    document.querySelectorAll('img').forEach(img => {
-      img.classList.add('reveal-img');
-      io.observe(img);
-    });
-  })();
-</script>
+<script src="../static/js/work.js"></script>
 </body>
 </html>
