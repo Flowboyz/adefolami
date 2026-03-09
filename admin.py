@@ -134,7 +134,6 @@ DEFAULT_CMS = {
     'footer': {
         'address':   'F6, Shelter View Estate, Ado Ekiti',
         'hours':     '08:00 - 18:00, Mon - Sat',
-        'copyright': 'Adefolami Structural Solutions | Created by Zammy and Bazillin'
     }
 }
 

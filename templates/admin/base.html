@@ -106,6 +106,94 @@
     .stat-chip{background:var(--ink3);border:1px solid var(--gold-ln);border-radius:6px;padding:18px 22px;display:inline-block;margin-right:14px;margin-bottom:16px;}
     .stat-chip strong{display:block;font-size:1.8rem;font-weight:700;color:var(--gold);}
     .stat-chip span{font-size:.72rem;color:var(--slate);text-transform:uppercase;letter-spacing:.1em;}
+
+    /* ── HAMBURGER BUTTON ── */
+    .sidebar-toggle{display:none;background:none;border:none;color:var(--ivory);font-size:1.2rem;cursor:pointer;padding:6px 8px;border-radius:var(--r);line-height:1;}
+    .sidebar-toggle:hover{background:var(--gold-dim);}
+
+    /* ── OVERLAY (mobile) ── */
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:850;backdrop-filter:blur(2px);}
+    .sidebar-overlay.show{display:block;}
+
+    /* ── TABLET ≤ 1024px ── */
+    @media(max-width:1024px){
+      :root{--sidebar:200px;}
+      .content{padding:28px 28px;max-width:100%;}
+      .save-bar{padding:12px 28px;margin:0 -28px -28px;}
+      .dash-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+      .btn-preview span,.btn-logout span{display:none;}
+      .btn-sm{padding:7px 10px;}
+    }
+
+    /* ── MOBILE ≤ 768px ── */
+    @media(max-width:768px){
+      :root{--topbar:54px;}
+
+      .topbar{padding:0 16px;}
+      .topbar-left strong{font-size:.85rem;}
+      .badge{display:none;}
+      .sidebar-toggle{display:inline-flex;align-items:center;justify-content:center;}
+
+      /* hide topbar nav buttons except logout */
+      .btn-preview{display:none;}
+
+      /* Sidebar slides in */
+      .sidebar{
+        transform:translateX(-110%);
+        transition:transform .28s cubic-bezier(.4,0,.2,1);
+        width:260px;
+        box-shadow:4px 0 32px rgba(0,0,0,.5);
+      }
+      .sidebar.open{transform:translateX(0);}
+
+      /* Main takes full width */
+      .main{margin-left:0;}
+      .content{padding:20px 16px;max-width:100%;}
+
+      /* Save bar */
+      .save-bar{padding:12px 16px;margin:0 -16px -20px;flex-wrap:wrap;gap:8px;}
+      .btn-save,.btn-cancel{flex:1;justify-content:center;text-align:center;}
+      .status-msg{width:100%;text-align:center;margin-left:0;}
+
+      /* Field groups */
+      .field-group{padding:18px 16px;}
+      .page-title{font-size:1.2rem;}
+      .page-sub{font-size:.8rem;}
+
+      /* Image fields stack vertically */
+      .img-field{flex-direction:column;}
+      .img-preview{width:100%;height:140px;}
+      .img-wrap{min-width:100%;}
+
+      /* Card row stacks */
+      .card-row{grid-template-columns:1fr;}
+      .card-thumb{width:100%;height:120px;}
+
+      /* Dashboard */
+      .dash-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+      .dash-card{padding:16px 14px;}
+      .dash-card i{font-size:1.1rem;margin-bottom:6px;}
+      .dash-card strong{font-size:.85rem;}
+
+      /* Table */
+      table{font-size:.78rem;}
+      th,td{padding:9px 10px;}
+      td:nth-child(4){max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+      /* Stat chips */
+      .stat-chip{padding:14px 16px;margin-right:8px;}
+      .stat-chip strong{font-size:1.4rem;}
+    }
+
+    /* ── SMALL PHONE ≤ 480px ── */
+    @media(max-width:480px){
+      .dash-grid{grid-template-columns:1fr 1fr;}
+      .dash-card span{display:none;}
+      .field input,.field textarea,.field select{font-size:.85rem;padding:10px 12px;}
+      .acc-header span{font-size:.82rem;}
+      .stat-chip{display:block;margin-right:0;margin-bottom:10px;}
+      .topbar-right .btn-logout i + *{display:none;}
+    }
   </style>
   {% block head %}{% endblock %}
 </head>
@@ -114,15 +202,19 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-left">
+    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle menu">&#9776;</button>
     <strong>Adefolami Admin</strong>
     <span class="badge">CMS</span>
   </div>
   <div class="topbar-right">
-    <a href="{{ url_for('index') }}" target="_blank" class="btn-sm btn-preview"><i class="fa fa-eye"></i> Preview Site</a>
-    <a href="{{ url_for('admin.contacts') }}" class="btn-sm btn-preview"><i class="fa fa-inbox"></i> Contacts</a>
-    <a href="{{ url_for('admin.logout') }}" class="btn-sm btn-logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    <a href="{{ url_for('index') }}" target="_blank" class="btn-sm btn-preview"><i class="fa fa-eye"></i> <span>Preview</span></a>
+    <a href="{{ url_for('admin.contacts') }}" class="btn-sm btn-preview"><i class="fa fa-inbox"></i> <span>Contacts</span></a>
+    <a href="{{ url_for('admin.logout') }}" class="btn-sm btn-logout"><i class="fa fa-sign-out-alt"></i> <span>Logout</span></a>
   </div>
 </div>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
@@ -202,35 +294,41 @@ function collectForm(formEl) {
   return data;
 }
 
-// Accordion toggle
-document.addEventListener('click', e => {
-  const header = e.target.closest('.acc-header');
-  if (!header) return;
-  header.closest('.acc-item').classList.toggle('open');
-});
+// ── Mobile sidebar toggle ─────────────────────────────────────
+(function(){
+  const toggle   = document.getElementById('sidebar-toggle');
+  const sidebar  = document.querySelector('.sidebar');
+  const overlay  = document.getElementById('sidebar-overlay');
+  if (!toggle || !sidebar || !overlay) return;
 
-// Live image preview
-document.addEventListener('input', e => {
-  const input = e.target;
-  if (!input.dataset.previewFor) return;
-  const prev = document.querySelector(`[data-preview="${input.dataset.previewFor}"]`);
-  if (prev) prev.src = input.value;
-});
-
-// File upload handler
-document.addEventListener('change', async e => {
-  const input = e.target;
-  if (input.type !== 'file' || !input.dataset.uploadFor) return;
-  const file = input.files[0];
-  if (!file) return;
-  const res = await apiUpload(file);
-  if (res.ok) {
-    const textInput = document.querySelector(`[name="${input.dataset.uploadFor}"]`);
-    if (textInput) { textInput.value = res.url; textInput.dispatchEvent(new Event('input')); }
-    const prev = document.querySelector(`[data-preview="${input.dataset.uploadFor}"]`);
-    if (prev) prev.src = '/' + res.url;
+  function openSidebar(){
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
   }
-});
+  function closeSidebar(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close sidebar when a nav link is clicked on mobile
+  sidebar.querySelectorAll('.nav-item').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) closeSidebar();
+    });
+  });
+
+  // Close on resize if desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeSidebar();
+  });
+})();
 </script>
 {% block scripts %}{% endblock %}
 </body>
