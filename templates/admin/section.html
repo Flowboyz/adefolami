@@ -1,0 +1,314 @@
+{% extends "admin/base.html" %}
+{% block title %}Edit {{ section_name | title }}{% endblock %}
+{% set active = section_name %}
+
+{% block content %}
+<div class="page-title">{{ titles[section_name] }}</div>
+<div class="page-sub">{{ subtitles[section_name] }}</div>
+
+<form id="section-form">
+
+{# ══════════ NAV ══════════ #}
+{% if section_name == 'nav' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-heading"></i> Brand</div>
+    <div class="field"><label>Brand Name</label><input name="brand" value="{{ cms.nav.brand }}" /></div>
+    <div class="field"><label>Logo Image</label>
+      <div class="img-field">
+        <div class="img-preview"><img src="/{{ cms.nav.logo }}" data-preview="logo" onerror="this.style.opacity='.2'" /></div>
+        <div class="img-wrap">
+          <input name="logo" value="{{ cms.nav.logo }}" data-preview-for="logo" />
+          <label class="upload-label"><i class="fa fa-upload"></i> Upload<input type="file" accept="image/*" data-upload-for="logo" /></label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-list"></i> Nav Links</div>
+    <div class="field"><label>Link 1</label><input name="link1" value="{{ cms.nav.link1 }}" /></div>
+    <div class="field"><label>Link 2</label><input name="link2" value="{{ cms.nav.link2 }}" /></div>
+    <div class="field"><label>Link 3</label><input name="link3" value="{{ cms.nav.link3 }}" /></div>
+    <div class="field"><label>Link 4</label><input name="link4" value="{{ cms.nav.link4 }}" /></div>
+  </div>
+
+{# ══════════ HERO ══════════ #}
+{% elif section_name == 'hero' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-font"></i> Text</div>
+    <div class="field"><label>Headline</label><input name="headline" value="{{ cms.hero.headline }}" /></div>
+    <div class="field"><label>Sub Text</label><textarea name="subtext">{{ cms.hero.subtext }}</textarea></div>
+    <div class="field"><label>Button Text</label><input name="btn_text" value="{{ cms.hero.btn_text }}" /></div>
+    <div class="field"><label>Button Link</label><input name="btn_link" value="{{ cms.hero.btn_link }}" /></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-image"></i> Hero Image</div>
+    <div class="field">
+      <div class="img-field">
+        <div class="img-preview"><img src="/{{ cms.hero.img }}" data-preview="img" onerror="this.style.opacity='.2'" /></div>
+        <div class="img-wrap">
+          <input name="img" value="{{ cms.hero.img }}" data-preview-for="img" />
+          <label class="upload-label"><i class="fa fa-upload"></i> Upload<input type="file" accept="image/*" data-upload-for="img" /></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{# ══════════ ABOUT ══════════ #}
+{% elif section_name == 'about' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-font"></i> Text</div>
+    <div class="field"><label>Section Title</label><input name="title" value="{{ cms.about.title }}" /></div>
+    <div class="field"><label>Company Heading</label><input name="heading" value="{{ cms.about.heading }}" /></div>
+    <div class="field"><label>Body Text</label><textarea name="body" style="min-height:160px">{{ cms.about.body }}</textarea></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-image"></i> Logo / Image</div>
+    <div class="field">
+      <div class="img-field">
+        <div class="img-preview"><img src="/{{ cms.about.img }}" data-preview="about_img" onerror="this.style.opacity='.2'" /></div>
+        <div class="img-wrap">
+          <input name="img" value="{{ cms.about.img }}" data-preview-for="about_img" />
+          <label class="upload-label"><i class="fa fa-upload"></i> Upload<input type="file" accept="image/*" data-upload-for="img" /></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{# ══════════ SERVICES ══════════ #}
+{% elif section_name == 'services' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-font"></i> Section Text</div>
+    <div class="field"><label>Heading</label><input name="heading" value="{{ cms.services.heading }}" /></div>
+    <div class="field"><label>Lead Paragraph</label><textarea name="lead">{{ cms.services.lead }}</textarea></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-th"></i> Service Cards</div>
+    {% for card in cms.services.cards %}
+    <div class="card-row">
+      <img class="card-thumb" src="/{{ card.img }}" onerror="this.style.opacity='.3'" alt="" id="thumb-{{ loop.index0 }}">
+      <div>
+        <div class="field"><label>Card {{ loop.index }} Title</label><input name="cards[{{ loop.index0 }}].title" value="{{ card.title }}" /></div>
+        <div class="field"><label>Image Path</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input name="cards[{{ loop.index0 }}].img" value="{{ card.img }}" oninput="document.getElementById('thumb-{{ loop.index0 }}').src='/'+this.value" style="flex:1"/>
+            <label class="upload-label" style="white-space:nowrap"><i class="fa fa-upload"></i><input type="file" accept="image/*" data-upload-for="cards[{{ loop.index0 }}].img" data-thumb="thumb-{{ loop.index0 }}" /></label>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{# ══════════ PROJECTS ══════════ #}
+{% elif section_name == 'projects' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-font"></i> Section</div>
+    <div class="field"><label>Heading</label><input name="heading" value="{{ cms.projects.heading }}" /></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-folder-open"></i> Projects</div>
+    {% for item in cms.projects.entries %}
+    <div class="acc-item">
+      <div class="acc-header"><span>{{ loop.index }}. {{ item.caption }}</span><i class="fa fa-chevron-down acc-icon"></i></div>
+      <div class="acc-body">
+        <div class="field"><label>Caption</label><input name="entries[{{ loop.index0 }}].caption" value="{{ item.caption }}" /></div>
+        <div class="field"><label>Link URL</label><input name="entries[{{ loop.index0 }}].link" value="{{ item.link }}" /></div>
+        <div class="field"><label>Image</label>
+          <div class="img-field">
+            <div class="img-preview"><img src="/{{ item.img }}" data-preview="proj_img_{{ loop.index0 }}" onerror="this.style.opacity='.2'" /></div>
+            <div class="img-wrap">
+              <input name="entries[{{ loop.index0 }}].img" value="{{ item.img }}" data-preview-for="proj_img_{{ loop.index0 }}" />
+              <label class="upload-label"><i class="fa fa-upload"></i> Upload<input type="file" accept="image/*" data-upload-for="entries[{{ loop.index0 }}].img" /></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{# ══════════ STATS ══════════ #}
+{% elif section_name == 'stats' %}
+  {% for i in range(1, 4) %}
+  {% set labels = ['label1','label2','label3'] %}
+  {% set values = ['value1','value2','value3'] %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-chart-bar"></i> Stat {{ i }}</div>
+    <div class="field"><label>Label</label><input name="{{ labels[i-1] }}" value="{{ cms.stats[labels[i-1]] }}" /></div>
+    <div class="field"><label>Value</label><input name="{{ values[i-1] }}" value="{{ cms.stats[values[i-1]] }}" /></div>
+  </div>
+  {% endfor %}
+
+{# ══════════ TESTIMONIALS ══════════ #}
+{% elif section_name == 'testimonials' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-font"></i> Section</div>
+    <div class="field"><label>Heading</label><input name="heading" value="{{ cms.testimonials.heading }}" /></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-quote-left"></i> Testimonials</div>
+    {% for item in cms.testimonials.entries %}
+    <div class="acc-item">
+      <div class="acc-header"><span>{{ loop.index }}. {{ item.name }}</span><i class="fa fa-chevron-down acc-icon"></i></div>
+      <div class="acc-body">
+        <div class="field"><label>Quote</label><textarea name="entries[{{ loop.index0 }}].quote">{{ item.quote }}</textarea></div>
+        <div class="field"><label>Client Name</label><input name="entries[{{ loop.index0 }}].name" value="{{ item.name }}" /></div>
+        <div class="field"><label>Photo</label>
+          <div class="img-field">
+            <div class="img-preview"><img src="/{{ item.img }}" data-preview="test_img_{{ loop.index0 }}" onerror="this.style.opacity='.2'" /></div>
+            <div class="img-wrap">
+              <input name="entries[{{ loop.index0 }}].img" value="{{ item.img }}" data-preview-for="test_img_{{ loop.index0 }}" />
+              <label class="upload-label"><i class="fa fa-upload"></i> Upload<input type="file" accept="image/*" data-upload-for="entries[{{ loop.index0 }}].img" /></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{# ══════════ CERTIFICATES ══════════ #}
+{% elif section_name == 'certs' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-font"></i> Section</div>
+    <div class="field"><label>Heading</label><input name="heading" value="{{ cms.certs.heading }}" /></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-certificate"></i> Certificate Slides</div>
+    {% for item in cms.certs.entries %}
+    <div class="acc-item">
+      <div class="acc-header"><span>{{ loop.index }}. {{ item.title }}</span><i class="fa fa-chevron-down acc-icon"></i></div>
+      <div class="acc-body">
+        <div class="field"><label>Title</label><input name="entries[{{ loop.index0 }}].title" value="{{ item.title }}" /></div>
+        <div class="field"><label>Description</label><textarea name="entries[{{ loop.index0 }}].desc">{{ item.desc }}</textarea></div>
+        <div class="field"><label>Image</label>
+          <div class="img-field">
+            <div class="img-preview"><img src="/{{ item.img }}" data-preview="cert_img_{{ loop.index0 }}" onerror="this.style.opacity='.2'" /></div>
+            <div class="img-wrap">
+              <input name="entries[{{ loop.index0 }}].img" value="{{ item.img }}" data-preview-for="cert_img_{{ loop.index0 }}" />
+              <label class="upload-label"><i class="fa fa-upload"></i> Upload<input type="file" accept="image/*" data-upload-for="entries[{{ loop.index0 }}].img" /></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{# ══════════ CONTACT ══════════ #}
+{% elif section_name == 'contact' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-map-marker-alt"></i> Contact Info</div>
+    <div class="field"><label>Section Heading</label><input name="heading"  value="{{ cms.contact.heading }}" /></div>
+    <div class="field"><label>Location / State</label><input name="location" value="{{ cms.contact.location }}" /></div>
+    <div class="field"><label>Street Address</label><input name="address"  value="{{ cms.contact.address }}" /></div>
+    <div class="field"><label>Phone</label><input name="phone"    value="{{ cms.contact.phone }}" /></div>
+    <div class="field"><label>Email</label><input type="email" name="email" value="{{ cms.contact.email }}" /></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-share-alt"></i> Social Media</div>
+    <div class="field"><label>Facebook URL</label><input type="url" name="facebook"  value="{{ cms.contact.facebook }}" /></div>
+    <div class="field"><label>Twitter / X URL</label><input type="url" name="twitter"   value="{{ cms.contact.twitter }}" /></div>
+    <div class="field"><label>Instagram URL</label><input type="url" name="instagram" value="{{ cms.contact.instagram }}" /></div>
+    <div class="field"><label>Pinterest URL</label><input type="url" name="pinterest" value="{{ cms.contact.pinterest }}" /></div>
+    <div class="field"><label>YouTube URL</label><input type="url" name="youtube"   value="{{ cms.contact.youtube }}" /></div>
+    <div class="field"><label>WhatsApp Number (digits only)</label><input name="whatsapp" value="{{ cms.contact.whatsapp }}" /></div>
+  </div>
+
+{# ══════════ FOOTER ══════════ #}
+{% elif section_name == 'footer' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-map-marker-alt"></i> Contact Column</div>
+    <div class="field"><label>Address</label><input name="address" value="{{ cms.footer.address }}" /></div>
+    <div class="field"><label>Business Hours</label><input name="hours" value="{{ cms.footer.hours }}" /></div>
+  </div>
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-copyright"></i> Copyright</div>
+    <div class="field"><label>Copyright Text</label><input name="copyright" value="{{ cms.footer.copyright }}" /></div>
+  </div>
+
+{# ══════════ CHANGE PASSWORD ══════════ #}
+{% elif section_name == 'password' %}
+  <div class="field-group">
+    <div class="fg-title"><i class="fa fa-key"></i> New Credentials</div>
+    <div class="field"><label>New Username</label><input id="new-user" placeholder="admin" /></div>
+    <div class="field"><label>New Password (min 6 chars)</label><input type="password" id="new-pass" /></div>
+    <div class="field"><label>Confirm Password</label><input type="password" id="new-pass-confirm" /></div>
+  </div>
+{% endif %}
+
+</form>
+
+<div class="save-bar">
+  {% if section_name != 'password' %}
+  <button class="btn-save" id="save-btn"><i class="fa fa-save"></i> Save Changes</button>
+  {% else %}
+  <button class="btn-save" id="save-btn"><i class="fa fa-save"></i> Update Credentials</button>
+  {% endif %}
+  <a href="{{ url_for('admin.dashboard') }}" class="btn-cancel">Cancel</a>
+  <span class="status-msg" id="status-msg"></span>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const SECTION = "{{ section_name }}";
+const statusEl = document.getElementById('status-msg');
+
+document.getElementById('save-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving…';
+
+  try {
+    let data;
+
+    if (SECTION === 'password') {
+      const u = document.getElementById('new-user').value.trim();
+      const p = document.getElementById('new-pass').value;
+      const c = document.getElementById('new-pass-confirm').value;
+      if (!u || !p) { showStatus('Username and password required.', 'err'); return; }
+      if (p.length < 6) { showStatus('Password must be 6+ chars.', 'err'); return; }
+      if (p !== c) { showStatus('Passwords do not match.', 'err'); return; }
+      const r = await fetch('/admin/api/credentials', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ username: u, password: p })
+      });
+      const res = await r.json();
+      showStatus(res.ok ? 'Credentials updated ✓' : res.error, res.ok ? 'ok' : 'err');
+      return;
+    }
+
+    data = collectForm(document.getElementById('section-form'));
+    const res = await apiSave(SECTION, data);
+    showStatus(res.ok ? 'Saved successfully ✓' : res.error, res.ok ? 'ok' : 'err');
+
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa fa-save"></i> Save Changes';
+  }
+});
+
+function showStatus(msg, type) {
+  statusEl.textContent = msg;
+  statusEl.className = `status-msg show ${type}`;
+  setTimeout(() => statusEl.className = 'status-msg', 3500);
+}
+
+// Override upload handler for service card thumbs
+document.addEventListener('change', async e => {
+  const input = e.target;
+  if (input.type !== 'file' || !input.dataset.uploadFor) return;
+  if (!input.dataset.thumb) return; // handled by base.html for others
+  const file = input.files[0];
+  if (!file) return;
+  const res = await apiUpload(file);
+  if (res.ok) {
+    const nameInput = document.querySelector(`[name="${input.dataset.uploadFor}"]`);
+    if (nameInput) { nameInput.value = res.url; }
+    const thumb = document.getElementById(input.dataset.thumb);
+    if (thumb) thumb.src = '/' + res.url;
+  }
+});
+</script>
+{% endblock %}

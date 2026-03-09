@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Admin{% endblock %} — Adefolami CMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root{--ink:#0d1117;--ink2:#141b27;--ink3:#1b2538;--gold:#b8882a;--gold-lt:#d4a84b;--gold-dim:rgba(184,136,42,.13);--gold-ln:rgba(184,136,42,.22);--ivory:#f4f0e8;--slate:#8b98ac;--danger:#ef4444;--success:#22c55e;--r:4px;--topbar:58px;--sidebar:230px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:15px;-webkit-font-smoothing:antialiased;}
+    body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ivory);min-height:100vh;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--ink);}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+    /* TOPBAR */
+    .topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar);background:rgba(13,17,23,.97);border-bottom:1px solid var(--gold-ln);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:1000;}
+    .topbar-left{display:flex;align-items:center;gap:14px;}
+    .topbar-left strong{font-size:.95rem;color:var(--ivory);}
+    .badge{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--gold-dim);border:1px solid var(--gold-ln);color:var(--gold);padding:3px 9px;border-radius:20px;}
+    .topbar-right{display:flex;align-items:center;gap:10px;}
+    .btn-sm{display:inline-flex;align-items:center;gap:7px;padding:7px 16px;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s;}
+    .btn-preview{background:transparent;border:1px solid var(--gold-ln);color:var(--gold);}
+    .btn-preview:hover{background:var(--gold-dim);border-color:var(--gold);}
+    .btn-logout{background:transparent;border:1px solid rgba(239,68,68,.3);color:#ef4444;}
+    .btn-logout:hover{background:rgba(239,68,68,.08);border-color:var(--danger);}
+
+    /* SIDEBAR */
+    .sidebar{position:fixed;top:var(--topbar);left:0;bottom:0;width:var(--sidebar);background:var(--ink2);border-right:1px solid var(--gold-ln);overflow-y:auto;z-index:900;padding:18px 0;}
+    .sidebar-section{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);padding:16px 20px 6px;}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;color:rgba(244,240,232,.6);font-size:.85rem;font-weight:500;border-left:2px solid transparent;text-decoration:none;transition:color .15s,background .15s,border-color .15s;}
+    .nav-item i{width:16px;text-align:center;font-size:.85rem;}
+    .nav-item:hover{color:var(--ivory);background:var(--gold-dim);}
+    .nav-item.active{color:var(--gold);border-left-color:var(--gold);background:var(--gold-dim);}
+
+    /* MAIN */
+    .main{margin-left:var(--sidebar);padding-top:var(--topbar);min-height:100vh;}
+    .content{padding:36px 40px;max-width:920px;}
+
+    /* FIELD GROUPS */
+    .page-title{font-size:1.5rem;font-weight:700;color:var(--ivory);margin-bottom:5px;}
+    .page-sub{font-size:.85rem;color:var(--slate);margin-bottom:32px;}
+    .field-group{background:var(--ink2);border:1px solid var(--gold-ln);border-radius:6px;padding:24px 26px;margin-bottom:20px;}
+    .fg-title{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+    .field{margin-bottom:16px;}
+    .field:last-child{margin-bottom:0;}
+    .field label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;}
+    .field input,.field textarea,.field select{width:100%;padding:11px 14px;background:var(--ink3);border:1px solid var(--gold-ln);border-radius:var(--r);color:var(--ivory);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+    .field textarea{resize:vertical;min-height:90px;line-height:1.6;}
+    .field input:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim);}
+    .field input::placeholder,.field textarea::placeholder{color:rgba(139,152,172,.5);}
+
+    /* IMAGE FIELD */
+    .img-field{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;}
+    .img-preview{width:88px;height:68px;border:1px solid var(--gold-ln);border-radius:var(--r);overflow:hidden;background:var(--ink3);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+    .img-preview img{width:100%;height:100%;object-fit:cover;}
+    .img-preview .empty{font-size:.65rem;color:var(--slate);text-align:center;padding:4px;}
+    .img-wrap{flex:1;min-width:200px;display:flex;flex-direction:column;gap:8px;}
+    .upload-label{display:inline-flex;align-items:center;gap:7px;background:var(--gold-dim);border:1px solid var(--gold-ln);color:var(--gold);padding:7px 14px;border-radius:var(--r);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+    .upload-label:hover{background:rgba(184,136,42,.22);}
+    .upload-label input[type=file]{display:none;}
+
+    /* ACCORDION ITEMS */
+    .acc-item{background:var(--ink3);border:1px solid var(--gold-ln);border-radius:5px;margin-bottom:12px;}
+    .acc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none;}
+    .acc-header span{font-weight:600;font-size:.9rem;color:var(--ivory);}
+    .acc-icon{color:var(--slate);transition:transform .25s;}
+    .acc-item.open .acc-icon{transform:rotate(180deg);}
+    .acc-body{display:none;padding:16px 18px;border-top:1px solid var(--gold-ln);}
+    .acc-item.open .acc-body{display:block;}
+
+    /* CARD EDITOR ROW */
+    .card-row{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:center;background:var(--ink3);border:1px solid var(--gold-ln);border-radius:5px;padding:14px;margin-bottom:12px;}
+    .card-thumb{width:76px;height:60px;object-fit:cover;border-radius:var(--r);border:1px solid var(--gold-ln);}
+
+    /* SAVE BAR */
+    .save-bar{position:sticky;bottom:0;background:rgba(13,17,23,.97);border-top:1px solid var(--gold-ln);backdrop-filter:blur(10px);padding:14px 40px;display:flex;align-items:center;gap:12px;margin:0 -40px -36px;}
+    .btn-save{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);border:none;border-radius:var(--r);padding:11px 28px;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .15s;}
+    .btn-save:hover{background:var(--gold-lt);transform:translateY(-1px);}
+    .btn-save:disabled{opacity:.5;pointer-events:none;}
+    .btn-cancel{background:transparent;border:1px solid var(--gold-ln);color:var(--slate);padding:11px 20px;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:color .2s,border-color .2s;}
+    .btn-cancel:hover{color:var(--ivory);border-color:var(--ivory);}
+    .status-msg{font-size:.82rem;margin-left:4px;opacity:0;transition:opacity .3s;}
+    .status-msg.show{opacity:1;}
+    .status-msg.ok{color:var(--success);}
+    .status-msg.err{color:var(--danger);}
+
+    /* DASHBOARD GRID */
+    .dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;margin-bottom:32px;}
+    .dash-card{background:var(--ink2);border:1px solid var(--gold-ln);border-radius:6px;padding:22px 20px;cursor:pointer;text-decoration:none;display:block;transition:border-color .2s,background .2s;}
+    .dash-card:hover{border-color:var(--gold);background:var(--gold-dim);}
+    .dash-card i{font-size:1.3rem;color:var(--gold);margin-bottom:10px;display:block;}
+    .dash-card strong{display:block;font-size:.95rem;color:var(--ivory);margin-bottom:3px;}
+    .dash-card span{font-size:.75rem;color:var(--slate);}
+
+    /* CONTACTS TABLE */
+    .table-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;}
+    th,td{text-align:left;padding:11px 14px;font-size:.85rem;border-bottom:1px solid var(--gold-ln);}
+    th{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);background:var(--ink3);}
+    td{color:var(--body-txt,rgba(244,240,232,.75));}
+    tr:hover td{background:var(--gold-dim);}
+
+    .info-box{background:var(--gold-dim);border:1px solid var(--gold-ln);border-radius:5px;padding:14px 18px;font-size:.82rem;color:rgba(244,240,232,.75);margin-bottom:24px;line-height:1.6;}
+    .info-box i{color:var(--gold);margin-right:6px;}
+    .stat-chip{background:var(--ink3);border:1px solid var(--gold-ln);border-radius:6px;padding:18px 22px;display:inline-block;margin-right:14px;margin-bottom:16px;}
+    .stat-chip strong{display:block;font-size:1.8rem;font-weight:700;color:var(--gold);}
+    .stat-chip span{font-size:.72rem;color:var(--slate);text-transform:uppercase;letter-spacing:.1em;}
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <strong>Adefolami Admin</strong>
+    <span class="badge">CMS</span>
+  </div>
+  <div class="topbar-right">
+    <a href="{{ url_for('index') }}" target="_blank" class="btn-sm btn-preview"><i class="fa fa-eye"></i> Preview Site</a>
+    <a href="{{ url_for('admin.contacts') }}" class="btn-sm btn-preview"><i class="fa fa-inbox"></i> Contacts</a>
+    <a href="{{ url_for('admin.logout') }}" class="btn-sm btn-logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-section">Overview</div>
+  <a href="{{ url_for('admin.dashboard') }}" class="nav-item {% if active=='dashboard' %}active{% endif %}"><i class="fa fa-th-large"></i> Dashboard</a>
+  <a href="{{ url_for('admin.contacts') }}" class="nav-item {% if active=='contacts' %}active{% endif %}"><i class="fa fa-inbox"></i> Contacts</a>
+
+  <div class="sidebar-section">Content</div>
+  <a href="{{ url_for('admin.section', name='nav') }}"          class="nav-item {% if active=='nav' %}active{% endif %}"><i class="fa fa-bars"></i> Navigation</a>
+  <a href="{{ url_for('admin.section', name='hero') }}"         class="nav-item {% if active=='hero' %}active{% endif %}"><i class="fa fa-image"></i> Hero</a>
+  <a href="{{ url_for('admin.section', name='about') }}"        class="nav-item {% if active=='about' %}active{% endif %}"><i class="fa fa-info-circle"></i> About</a>
+  <a href="{{ url_for('admin.section', name='services') }}"     class="nav-item {% if active=='services' %}active{% endif %}"><i class="fa fa-cogs"></i> Services</a>
+  <a href="{{ url_for('admin.section', name='projects') }}"     class="nav-item {% if active=='projects' %}active{% endif %}"><i class="fa fa-folder-open"></i> Projects</a>
+  <a href="{{ url_for('admin.section', name='stats') }}"        class="nav-item {% if active=='stats' %}active{% endif %}"><i class="fa fa-chart-bar"></i> Stats</a>
+  <a href="{{ url_for('admin.section', name='testimonials') }}" class="nav-item {% if active=='testimonials' %}active{% endif %}"><i class="fa fa-quote-left"></i> Testimonials</a>
+  <a href="{{ url_for('admin.section', name='certs') }}"        class="nav-item {% if active=='certs' %}active{% endif %}"><i class="fa fa-certificate"></i> Certificates</a>
+  <a href="{{ url_for('admin.section', name='contact') }}"      class="nav-item {% if active=='contact' %}active{% endif %}"><i class="fa fa-envelope"></i> Contact</a>
+  <a href="{{ url_for('admin.section', name='footer') }}"       class="nav-item {% if active=='footer' %}active{% endif %}"><i class="fa fa-sitemap"></i> Footer</a>
+
+  <div class="sidebar-section">System</div>
+  <a href="{{ url_for('admin.section', name='password') }}"     class="nav-item {% if active=='password' %}active{% endif %}"><i class="fa fa-key"></i> Change Password</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
+<script>
+// ── Shared admin JS helpers ───────────────────────────────────
+async function apiSave(section, data) {
+  const r = await fetch(`/admin/api/cms/${section}`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(data)
+  });
+  return r.json();
+}
+
+async function apiUpload(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  const r = await fetch('/admin/api/upload', { method: 'POST', body: fd });
+  return r.json();
+}
+
+function showStatus(el, msg, type = 'ok') {
+  el.textContent = msg;
+  el.className = `status-msg show ${type}`;
+  setTimeout(() => { el.className = 'status-msg'; }, 3000);
+}
+
+function collectForm(formEl) {
+  const data = {};
+  formEl.querySelectorAll('[name]').forEach(el => {
+    const name = el.name;
+    if (!name) return;
+    // handle arrays: name="entries[0].title"
+    if (name.includes('[')) {
+      const match = name.match(/^(\w+)\[(\d+)\]\.(\w+)$/);
+      if (match) {
+        const [, key, idx, field] = match;
+        if (!data[key]) data[key] = [];
+        if (!data[key][idx]) data[key][idx] = {};
+        data[key][idx][field] = el.value;
+        return;
+      }
+    }
+    data[name] = el.value;
+  });
+  // flatten array gaps
+  Object.keys(data).forEach(k => {
+    if (Array.isArray(data[k])) data[k] = data[k].filter(Boolean);
+  });
+  return data;
+}
+
+// Accordion toggle
+document.addEventListener('click', e => {
+  const header = e.target.closest('.acc-header');
+  if (!header) return;
+  header.closest('.acc-item').classList.toggle('open');
+});
+
+// Live image preview
+document.addEventListener('input', e => {
+  const input = e.target;
+  if (!input.dataset.previewFor) return;
+  const prev = document.querySelector(`[data-preview="${input.dataset.previewFor}"]`);
+  if (prev) prev.src = input.value;
+});
+
+// File upload handler
+document.addEventListener('change', async e => {
+  const input = e.target;
+  if (input.type !== 'file' || !input.dataset.uploadFor) return;
+  const file = input.files[0];
+  if (!file) return;
+  const res = await apiUpload(file);
+  if (res.ok) {
+    const textInput = document.querySelector(`[name="${input.dataset.uploadFor}"]`);
+    if (textInput) { textInput.value = res.url; textInput.dispatchEvent(new Event('input')); }
+    const prev = document.querySelector(`[data-preview="${input.dataset.uploadFor}"]`);
+    if (prev) prev.src = '/' + res.url;
+  }
+});
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

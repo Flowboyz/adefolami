@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% block title %}Enquiries{% endblock %}
+{% set active = 'contacts' %}
+
+{% block content %}
+<div class="page-title">Enquiries</div>
+<div class="page-sub">All contact form submissions — newest first.</div>
+
+{% if contacts %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>#</th><th>Name</th><th>Email</th><th>Message</th></tr>
+    </thead>
+    <tbody>
+      {% for c in contacts %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ c.name }}</td>
+        <td><a href="mailto:{{ c.email }}" style="color:var(--gold)">{{ c.email }}</a></td>
+        <td>{{ c.message }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="info-box"><i class="fa fa-inbox"></i> No enquiries yet.</div>
+{% endif %}
+{% endblock %}

@@ -6,62 +6,56 @@
     <title>Adefolami Structural Solutions</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="../static/img/folami-logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" 
-    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/{{ cms.nav.logo }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+
 <!-- NAV -->
 <nav class="nav">
     <div class="nav-inner">
-        <div class="brand">
-            <img src="../static/img/folami-logo.png" width="50px" height=" 50px" onclick="window.location.href='index.html'">
-            <h1>Adefolami Structural Solutions</h1>
+        <div class="brand" onclick="window.location.href='/'">
+            <img src="/{{ cms.nav.logo }}" width="44" height="44" alt="Logo">
+            <h1>{{ cms.nav.brand }}</h1>
         </div>
-        <button id="nav-toggle" aria-label="menu">☰</button>
+        <button id="nav-toggle" aria-label="menu" aria-expanded="false">☰</button>
         <ul class="nav-links" id="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact-form">Contact</a></li>
+            <li><a href="#about">{{ cms.nav.link1 }}</a></li>
+            <li><a href="#services">{{ cms.nav.link2 }}</a></li>
+            <li><a href="#projects">{{ cms.nav.link3 }}</a></li>
+            <li><a href="#contact-form">{{ cms.nav.link4 }}</a></li>
         </ul>
     </div>
-  </nav>
+</nav>
 
 
 <!-- HERO -->
 <header class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-inner">
-        <h1>Revitalize your<br>building structure</h1>
-        <a href="#contact" class="btn">Get in touch</a>
+        <h1>{{ cms.hero.headline }}</h1>
+        <p class="hero-sub">{{ cms.hero.subtext }}</p>
+        <a href="{{ cms.hero.btn_link }}" class="btn">{{ cms.hero.btn_text }}</a>
     </div>
-    <div class="hero-img"><img src="../static/img/e1.png" loading="lazy"></div>
-
+    <div class="hero-img">
+        <img src="/{{ cms.hero.img }}" loading="lazy" alt="Hero image">
+    </div>
 </header>
 
 
 <!-- ABOUT -->
 <section id="about">
-    <h1>ABOUT</h1>
+    <h1>{{ cms.about.title }}</h1>
     <div class="about">
-    <div class="about-left">
-        <h2>ADEFOLAMI STRUCTURAL SOLUTIONS NIGERIA LIMITED</h2>
-        <p>Adefolami Structural Solutions Nigeria Limited is a Nigerial Incorporated Company and locally owned.
-             The company offers engineering construction and construction project management.
-            Adefolami is dedicated to organization or individual seeking construction services.
-            We provide engineering construction services to power distribution and transmission companies, parastatals, oil and pipe line minicipalities and commercial/residential real estate developers. <br>
-            Our area of expertise includes but not limited to building technology, civil and structural engineering.
-            We are committed to providing the best possible construction expertise & services to ensure cost effective and successful project.
-            We work closely with our client to accurately interpret their dreams / vision in drawing and bring them  to the disired reality through construction solutions to meet their needs; we cummunicate with our clients throughout the construction process to keep them inform of progress and to ensure that project keeps on schedule and within budget. 
-        </p>
-    </div>
-    <div class="about-right">
-        <img src="../static/img/folami-logo.png" alt="Company logo">
-    </div>
+        <div class="about-left">
+            <h2>{{ cms.about.heading }}</h2>
+            <p>{{ cms.about.body }}</p>
+        </div>
+        <div class="about-right">
+            <img src="/{{ cms.about.img }}" alt="Company logo">
+        </div>
     </div>
 </section>
 
@@ -69,306 +63,262 @@
 <!-- SERVICES -->
 <section id="services" class="services">
     <div class="container">
-        <h2>SERVICES</h2>
-        <p class="lead">ASSNL offers a wide range of civil and structural engineering construction ranging from steel structures,
-             erections, reinforced concrete and road construction in gravel, paving block, concrete, 
-             Bitumen reads and associated drainage, convert and bridge structures.</p>
-
-
+        <h2>{{ cms.services.heading }}</h2>
+        <p class="lead">{{ cms.services.lead }}</p>
         <div class="cards">
+            {% for card in cms.services.cards %}
             <article class="card-reveal">
-                <img src="../static/img/event2.png" alt="structural designs"/>
-                <h4>structural engineering</h4>
+                <img src="/{{ card.img }}" alt="{{ card.title }}"/>
+                <h4>{{ card.title }}</h4>
             </article>
-
-            <article class="card-reveal">
-                <img src="../static/img/road.png" alt="civil engineering"/>
-                <h4>Civil Engineering</h4>
-            </article>
-
-            <article class="card-reveal">
-                <img src="../static/img/manager.png" alt="general contract"/>
-                <h4> Project Management</h4>
-            </article>
-
-            <article class="card-reveal">
-                <img src="../static/img/estate2.png" alt="general merchandise"/>
-                <h4 >Building Construction</h4>
-            </article>
-
-            <article class="card-reveal">
-                <img src="../static/img/services.png" alt="project managment"/>
-                <h4>Additional services</h4>
-            </article>
+            {% endfor %}
         </div>
     </div>
 </section>
+
+
 <!-- PROJECTS -->
 <section id="projects" class="projects">
-    <h2>PROJECT</h2>
+    <h2>{{ cms.projects.heading }}</h2>
     <div class="project-grid">
-        <a href="/hotelmotif"><figure class="proj reveal"><img src="../static/img/hotel.png" alt="hotel motif"><figcaption>HOTEL MOTIF</figcaption></figure></a>
-        <a href="/roadconstruct"><figure class="proj reveal"><img src="../static/img/road.png" alt="Road Construction"><figcaption>ROAD CONSTRUCTION</figcaption></figure></a>
-        <a href="/borehole"><figure class="proj reveal"><img src="../static/img/borehole.png" alt="Borehole construction"><figcaption>BOREHOLE DRILLING</figcaption></figure></a>
-        <a href="/renovation"><figure class="proj reveal"><img src="../static/img/renovation.png" alt="School renovation"><figcaption>SCHOOL RENOVATION(AGILE PROJECT)</figcaption></figure></a>
-        <a href=""><figure class="proj reveal"><img src="../static/img/estate1.png" alt="duplex construction"><figcaption>DUPLEX CONSTRUCTION, SUNSHINE ESTATE, AKURE</figcaption></figure></a>
-        <a href=""><figure class="proj reveal"><img src="../static/img/box.jpg" alt="box culvert"><figcaption>BOX CULVERT</figcaption></figure></a>
-        <a href=""><figure class="proj reveal"><img src="../static/img/event1.png" alt="capacity event hall"><figcaption>750 CAPACITY EVENT HALL, IJEBU ODE</figcaption></figure></a>
-        <a href=""><figure class="proj reveal"><img src="../static/img/walkway.png" alt="decorative concrete walkway"><figcaption>DECORATIVE CONCRETE WALKWAY</figcaption></figure></a>
-        <a href="/team"><figure class="proj reveal"><img src="../static/img/team.png" alt="our team members"><figcaption>OUR TECHNICAL TEAM</figcaption></figure></a>
+        {% for item in cms.projects.entries %}
+        <a href="{{ item.link or '#' }}">
+            <figure class="proj reveal">
+                <img src="/{{ item.img }}" alt="{{ item.caption }}">
+                <figcaption>{{ item.caption }}</figcaption>
+            </figure>
+        </a>
+        {% endfor %}
     </div>
 </section>
 
 
 <!-- STATS -->
 <section class="stats">
-    <div class="stat"> <h3>Year Established</h3><p>2009</p></div>
-    <div class="stat"> <h3>Skilled Artisans</h3><p>56</p></div>
-  <div class="stat"> <h3>Completed Projects</h3><p id="count">200+</p></div>
+    <div class="stat">
+        <h3>{{ cms.stats.label1 }}</h3>
+        <p>{{ cms.stats.value1 }}</p>
+    </div>
+    <div class="stat">
+        <h3>{{ cms.stats.label2 }}</h3>
+        <p>{{ cms.stats.value2 }}</p>
+    </div>
+    <div class="stat">
+        <h3>{{ cms.stats.label3 }}</h3>
+        <p id="count">{{ cms.stats.value3 }}</p>
+    </div>
 </section>
 
 
 <!-- TESTIMONIALS -->
 <section class="testimonials">
-  <h2>FROM OUR SATISFIED CUSTOMER</h2>
-
-  <div class="slider" id="slider">
-
-    <!-- SLIDE 1 -->
-    <div class="slide">
-      <div class="item small">
-        <img src="../static/img/p1.png">
-        <blockquote>Boost your product credibility...</blockquote>
-        <cite>- Bass Co.</cite>
-      </div>
-
-      <div class="item medium">
-        <img src="../static/img/black-engineers-supervising-industrial-automation-system.jpg">
-        <blockquote>Trusted service delivery...</blockquote>
-        <cite>- Bass Co.</cite>
-      </div>
-
-      <div class="item large">
-        <img src="../static/img/p3.png">
-        <blockquote>People love recommendations...</blockquote>
-        <cite>- Micheleur Law</cite>
-      </div>
-
-      <div class="item medium">
-        <img src="../static/img/p2.png">
-        <blockquote>Valuable feedback...</blockquote>
-        <cite>- Studio Rallia</cite>
-      </div>
-
-      <div class="item small">
-        <img src="../static/img/all-black-team-engineers-comparing-solar-panels-designs-laptop.jpg">
-        <blockquote>Professional experience...</blockquote>
-        <cite>- Studio Rallia</cite>
-      </div>
+    <h2>{{ cms.testimonials.heading }}</h2>
+    <div class="slider" id="slider">
+        <!-- Slide 1: items 0-4 -->
+        <div class="slide">
+            {% for item in cms.testimonials.entries[:5] %}
+            <div class="item {% if loop.index == 1 or loop.index == 5 %}small{% elif loop.index == 2 or loop.index == 4 %}medium{% else %}large{% endif %}">
+                <img src="/{{ item.img }}" alt="{{ item.name }}">
+                <blockquote>{{ item.quote }}</blockquote>
+                <cite>— {{ item.name }}</cite>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Slide 2: items 5-7 -->
+        <div class="slide">
+            {% for item in cms.testimonials.entries[5:] %}
+            <div class="item {% if loop.index == 1 or loop.index == 3 %}small{% else %}medium{% endif %}">
+                <img src="/{{ item.img }}" alt="{{ item.name }}">
+                <blockquote>{{ item.quote }}</blockquote>
+                <cite>— {{ item.name }}</cite>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-
-    <!-- SLIDE 2 -->
-    <div class="slide">
-      <div class="item small">
-        <img src="../static/img/p2.png">
-        <blockquote>Customer trust matters...</blockquote>
-        <cite>- Bass Co.</cite>
-      </div>
-
-      <div class="item medium">
-        <img src="../static/img/p1.png">
-        <blockquote>Credibility sells...</blockquote>
-        <cite>- Bass Co.</cite>
-      </div>
-
-      <div class="item large">
-        <img src="../static/img/working-housing-project.jpg">
-        <blockquote>Recommendations win...</blockquote>
-        <cite>- Micheleur Law</cite>
-      </div>
-
-      <div class="item medium">
-        <img src="../static/img/all-black-team-engineers-comparing-solar-panels-designs-laptop.jpg">
-        <blockquote>Strong feedback...</blockquote>
-        <cite>- Studio Rallia</cite>
-      </div>
-
-      <div class="item small">
-        <img src="../static/img/all-black-team-engineers-comparing-solar-panels-designs-laptop.jpg">
-        <blockquote>Professional work...</blockquote>
-        <cite>- Studio Rallia</cite>
-      </div>
+    <div class="pagination">
+        <span class="dot active"></span>
+        <span class="dot"></span>
     </div>
-
-  </div>
-
-  <div class="pagination">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-  </div>
 </section>
 
+
+<!-- CERTIFICATES -->
 <section class="certificates">
-
-  <h2>OUR CERTIFICATIONS & ACCREDITATIONS</h2>
-
-  <!-- ARROWS -->
-  <button class="nav prev"><i class="fa-solid fa-angle-left"></i></button>
-  <button class="nav2 next"><i class="fa-solid fa-angle-right"></i></button>
-
-  <!-- SLIDER -->
-  <div class="cert-slider">
-
-    <!-- SLIDE 1 -->
-    <div class="cert-slide">
-      <div class="cert-image">
-        <img src="static/img/cert1.jpg" alt="Certificate">
-      </div>
-      <div class="cert-details">
-        <h3>ISO 9001 Certification</h3>
-        <p>
-          This certification confirms our compliance with international
-          quality management standards, ensuring efficient project execution,
-          quality assurance, and customer satisfaction.
-        </p>
-      </div>
+    <h2>{{ cms.certs.heading }}</h2>
+    <button class="nav prev"><i class="fa-solid fa-angle-left"></i></button>
+    <button class="nav2 next"><i class="fa-solid fa-angle-right"></i></button>
+    <div class="cert-slider">
+        {% for item in cms.certs.entries %}
+        <div class="cert-slide">
+            <div class="cert-image">
+                <img src="/{{ item.img }}" alt="{{ item.title }}">
+            </div>
+            <div class="cert-details">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.desc }}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-
-    <!-- SLIDE 2 -->
-    <div class="cert-slide">
-      <div class="cert-image">
-        <img src="static/img/cert2.jpg">
-      </div>
-      <div class="cert-details">
-        <h3>Engineering Regulatory Council Approval</h3>
-        <p>
-          Official approval confirming our company is legally registered
-          and authorized to execute civil and structural engineering projects.
-        </p>
-      </div>
+    <div class="cert-pagination">
+        {% for item in cms.certs.entries %}
+        <span class="dot {% if loop.first %}active{% endif %}"></span>
+        {% endfor %}
     </div>
-
-    <!-- Duplicate until slide 10 -->
-    <!-- You can just change text and image -->
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert1.jpg"></div><div class="cert-details"><h3>Safety Compliance Certificate</h3><p>Demonstrates strict adherence to industrial safety regulations.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert3.jpg"></div><div class="cert-details"><h3>Environmental Compliance</h3><p>Certified environmental sustainability practices.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert4.jpg"></div><div class="cert-details"><h3>Construction License</h3><p>Government-issued construction operating license.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert6.jpg"></div><div class="cert-details"><h3>Project Excellence Award</h3><p>Awarded for outstanding engineering execution.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert7.jpg"></div><div class="cert-details"><h3>Client Trust Certificate</h3><p>Recognition for consistent client satisfaction.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert8.jpg"></div><div class="cert-details"><h3>Professional Membership</h3><p>Registered member of engineering professional bodies.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert9.jpg"></div><div class="cert-details"><h3>Quality Assurance</h3><p>Proof of quality-controlled construction process.</p></div></div>
-    <div class="cert-slide"><div class="cert-image"><img src="../static/img/cert10.jpg"></div><div class="cert-details"><h3>Operational Permit</h3><p>Legal permit to operate engineering services.</p></div></div>
-
-  </div>
-
-  <!-- PAGINATION -->
-  <div class="cert-pagination">
-    <span class="dot active"></span>
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-
 </section>
-
 
 
 <!-- CONTACT -->
-<section id="contact" class="contact">
-    <h2>CONTACT US</h2>
+<section id="contact-form" class="contact">
+    <h2>{{ cms.contact.heading }}</h2>
     <div class="contact-wrap">
-      <div class="contact-info">
-        <h3 class="address">Address</h3>
-        <h4>Location: <span>Ekiti State Nigeria.</span></h4>
-        <p>F6, Shelter View Estate, Ado Ekiti</p>
-        <p>Tel: +2348061242484</p>
-        <p>Email:<a href="mailto:adefolamistructuralsolutions@gmail.com"> adefolamistructuresolutions@gmail.com</a></p>
-        <div class="follow">
-            <h4>Follow Us</h4>
-            <div class="icon">
-                <a href="https://www.facebook.com/profile.php?id=61585844184780"><i class="fab fa-facebook"></i></a>
-                <a href=""><i class="fab fa-twitter"></i></a>
-                <a href=""><i class="fab fa-instagram"></i></a>
-                <a href=""><i class="fab fa-pinterest"></i></a>
-                <a href=""><i class="fab fa-youtube"></i></a>
+        <div class="contact-info">
+            <h3 class="address">Address</h3>
+            <h4>Location: <span>{{ cms.contact.location }}</span></h4>
+            <p>{{ cms.contact.address }}</p>
+            <p>Tel: {{ cms.contact.phone }}</p>
+            {% if cms.contact.email %}
+            <p>Email: <a href="/cdn-cgi/l/email-protection#8bf0f0abe8e6f8a5e8e4e5ffeae8ffa5eee6eae2e7abf6f6">{{ cms.contact.email }}</a></p>
+            {% endif %}
+            <div class="follow">
+                <h4>Follow Us</h4>
+                <div class="icon">
+                    <a href="{{ cms.contact.facebook or '#' }}"><i class="fab fa-facebook"></i></a>
+                    <a href="{{ cms.contact.twitter or '#' }}"><i class="fab fa-twitter"></i></a>
+                    <a href="{{ cms.contact.instagram or '#' }}"><i class="fab fa-instagram"></i></a>
+                    <a href="{{ cms.contact.pinterest or '#' }}"><i class="fab fa-pinterest"></i></a>
+                    <a href="{{ cms.contact.youtube or '#' }}"><i class="fab fa-youtube"></i></a>
+                </div>
             </div>
         </div>
-      </div>
 
-            <form class="contact-form">
-                <div class="form-divsion">
+        <form class="contact-form" id="contact-form-el">
+            <div class="form-divsion">
                 <label>Name:</label>
-                    <input name="name" type="text" id="name" required></div>
-                <div class="form-divsion">
-                    <label for="email" autocomplete="email">Email:</label>
-                    <input name="email" type="email" id="email" required></label></div>
-                    <div class="form-divsion">
+                <input name="name" type="text" id="name" required placeholder="Your full name">
+            </div>
+            <div class="form-divsion">
+                <label for="email">Email:</label>
+                <input name="email" type="email" id="email" required placeholder="your@email.com">
+            </div>
+            <div class="form-divsion">
                 <label for="message">Message:</label>
-                    <input name="message" type="text" id="message" required></label></div>
-                    <div class="form-divsion2"></div>
-                <button type="submit" class="btn">Send Message</button>
-                </div>
-                <p id="form-status" role="status" aria-live="polite"></p>
-            </form> 
+                <textarea name="message" id="message" required placeholder="Write your message here…"></textarea>
+            </div>
+            <button type="submit" class="btn">Send Message</button>
+            <p id="form-status" role="status" aria-live="polite"></p>
+        </form>
     </div>
 </section>
+
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4766.366320522617!2d5.257461512419284!3d7.644075586490455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1047e4f2dbb9ca5d%3A0xf5f3570facb946fe!2sShelter%20View%20Estate!5e0!3m2!1sen!2sch!4v1766890603482!5m2!1sen!2sch"
- width="1900" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    height="400" style="border:0;width:100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
 
 <!-- FOOTER -->
 <footer>
-        <div class="col">
-            <img  class="logo" src="../static/img/folami-logo.png" width="100px" height="70px">
-            <h4>Contact</h4>
-            <p><strong>Address:</strong> F6, Shelter View Estate, Ado Ekiti</p>
-            <p><strong>Hours:</strong> 08:00 - 18:00, Mon - Sat</p>
-                <div class="follow">
-                <h4>Follow Us</h4>
-                <div class="icon">
-                    <a href="http://"><i class="fab fa-facebook"></i></a>
-                    <a href="http://"><i class="fab fa-twitter"></i></a>
-                    <a href="http://"><i class="fab fa-instagram"></i></a>
-                    <a href=""><i class="fab fa-pinterest"></i></a>
-                    <a href="http://"><i class="fab fa-youtube"></i></a>
-                </div>
-                </div>
+    <div class="col">
+        <img class="logo" src="/{{ cms.nav.logo }}" width="100" height="70" alt="Logo">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> {{ cms.footer.address }}</p>
+        <p><strong>Hours:</strong> {{ cms.footer.hours }}</p>
+        <div class="follow">
+            <h4>Follow Us</h4>
+            <div class="icon">
+                <a href="{{ cms.contact.facebook or '#' }}"><i class="fab fa-facebook"></i></a>
+                <a href="{{ cms.contact.twitter or '#' }}"><i class="fab fa-twitter"></i></a>
+                <a href="{{ cms.contact.instagram or '#' }}"><i class="fab fa-instagram"></i></a>
+                <a href="{{ cms.contact.pinterest or '#' }}"><i class="fab fa-pinterest"></i></a>
+                <a href="{{ cms.contact.youtube or '#' }}"><i class="fab fa-youtube"></i></a>
             </div>
-        <div class="col">
-            <h4>About</h4>
-            <a href="#">My Acount</a>
-            <a href="#">Delivery Information</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="tel:+2348061242484">Contact</a>        
         </div>
-        <div class="col">
-            <h4>My Account</h4>
-            <a href="#">Sign In</a>
-            <a href="#">My Wishlist</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Track My Order</a>
-            <a href="#">Help</a>        
-        </div>
-        <div class="install">
-            <h4>Download Our Portofolio</h4>
-            <p>From our website</p>
-            <div class="row">
-                <img src="../img/about/banner/blog/features/pay/app.jpg" alt="">
-                <img src="../img/about/banner/blog/features/pay/play.jpg" alt="">
-            </div>
-            <p>Secured Payment Gateway</p>
-            <img src="../img/about/banner/blog/features/pay/pay.png" alt="">
-        </div>
-</footer>
-   <div class="footer-inner">
-        <div class="copy">© <span class="year"></span> Adefolami Structural Solutions | Created by Zammy and Bazillin</div>
     </div>
+    <div class="col">
+        <h4>About</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="tel:{{ cms.contact.phone }}">Contact</a>
+    </div>
+    <div class="col">
+        <h4>Quick Links</h4>
+        <a href="#about">About Us</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact-form">Get a Quote</a>
+    </div>
+    <div class="col">
+        <h4>Download Our Portfolio</h4>
+        <p>From our website</p>
+    </div>
+</footer>
+
+<div class="footer-inner">
+    <div class="copy">© <span class="year"></span> {{ cms.footer.copyright }}</div>
+</div>
+
 <div class="back-to-top"><i class="fa-solid fa-up-long"></i></div>
-<div class='whatsapp-container' >
-<div class="whatsapp" onclick="window.location.href='https://wa.me/2348061242484'"><i class="fab fa-whatsapp"></i></div>
-<span>Message us</span></div>
-<script src="../static/js/main.js"></script>
-<script src="../static/js/work.js"></script>
-</body>
-</html>
+
+<div class="whatsapp-container">
+    <div class="whatsapp" onclick="window.location.href='https://wa.me/{{ cms.contact.whatsapp }}'">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+    <span>Message us</span>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script>
+// Contact form — posts to Flask /contact endpoint
+(function () {
+    const form     = document.getElementById('contact-form-el');
+    const statusEl = document.getElementById('form-status');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type=submit]');
+
+        const name    = form.querySelector('#name').value.trim();
+        const email   = form.querySelector('#email').value.trim();
+        const message = form.querySelector('#message').value.trim();
+
+        if (!name || !email || !message) {
+            statusEl.textContent = 'Please fill in all fields.';
+            statusEl.style.color = '#ef4444';
+            return;
+        }
+
+        btn.classList.add('loading');
+        btn.disabled = true;
+        statusEl.textContent = '';
+
+        try {
+            const res = await fetch('/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, message })
+            });
+            const data = await res.json();
+            if (data.ok) {
+                btn.classList.remove('loading');
+                btn.classList.add('success');
+                btn.textContent = 'Sent ✓';
+                statusEl.textContent = data.message;
+                statusEl.style.color = '#22c55e';
+                form.reset();
+                setTimeout(() => {
+                    btn.classList.remove('success');
+                    btn.textContent = 'Send Message';
+                    btn.disabled = false;
+                }, 4000);
+            } else {
+                throw new Error(data.error || 'Server error');
+            }
+        } catch (err) {
+            btn.classList.remove('loading');
+            btn.classList.add('error');
+            btn.textContent = 'Failed — Try Again';
+            statusEl.textContent = err.message;
+            statusEl.style.color = '#ef4444';
+            setTimeout(() => {
+                btn.classList.remove('error');
+      

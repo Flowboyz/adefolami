@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login — Adefolami</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--ink:#0d1117;--ink2:#141b27;--ink3:#1b2538;--gold:#b8882a;--gold-lt:#d4a84b;--gold-dim:rgba(184,136,42,.13);--gold-ln:rgba(184,136,42,.22);--ivory:#f4f0e8;--slate:#8b98ac;--danger:#ef4444;--r:4px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ivory);min-height:100vh;display:flex;align-items:center;justify-content:center;}
+    .box{background:var(--ink2);border:1px solid var(--gold-ln);border-radius:8px;padding:52px 48px;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,.6);}
+    .badge{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:var(--gold-dim);border:1px solid var(--gold-ln);color:var(--gold);padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:28px;}
+    h2{font-size:1.5rem;font-weight:700;color:var(--ivory);margin-bottom:6px;}
+    p{font-size:.85rem;color:var(--slate);margin-bottom:28px;}
+    label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin-bottom:7px;}
+    input{width:100%;padding:12px 14px;background:var(--ink3);border:1px solid var(--gold-ln);border-radius:var(--r);color:var(--ivory);font-family:'DM Sans',sans-serif;font-size:.95rem;outline:none;margin-bottom:18px;transition:border-color .2s,box-shadow .2s;}
+    input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim);}
+    button{width:100%;padding:13px;background:var(--gold);color:var(--ink);border:none;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+    button:hover{background:var(--gold-lt);}
+    .error{color:var(--danger);font-size:.82rem;margin-top:12px;text-align:center;padding:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:var(--r);}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <span class="badge">Admin Portal</span>
+    <h2>Sign In</h2>
+    <p>Adefolami Structural Solutions — Content Management</p>
+    <form method="POST" action="{{ url_for('admin.login') }}">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" autocomplete="username" required />
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required />
+      <button type="submit">Sign In</button>
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    </form>
+  </div>
+</body>
+</html>

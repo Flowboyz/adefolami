@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% set active = 'dashboard' %}
+
+{% block content %}
+<div class="page-title">Dashboard</div>
+<div class="page-sub">Welcome back. Select a section below to edit website content.</div>
+
+<div class="stat-chip"><strong>{{ contact_count }}</strong><span>Enquiries received</span></div>
+
+<div class="dash-grid">
+  <a href="{{ url_for('admin.section', name='hero') }}"         class="dash-card"><i class="fa fa-image"></i><strong>Hero</strong><span>Headline, image, CTA</span></a>
+  <a href="{{ url_for('admin.section', name='about') }}"        class="dash-card"><i class="fa fa-info-circle"></i><strong>About</strong><span>Company text & logo</span></a>
+  <a href="{{ url_for('admin.section', name='services') }}"     class="dash-card"><i class="fa fa-cogs"></i><strong>Services</strong><span>5 service cards</span></a>
+  <a href="{{ url_for('admin.section', name='projects') }}"     class="dash-card"><i class="fa fa-folder-open"></i><strong>Projects</strong><span>9 project entries</span></a>
+  <a href="{{ url_for('admin.section', name='stats') }}"        class="dash-card"><i class="fa fa-chart-bar"></i><strong>Stats</strong><span>Year, artisans, projects</span></a>
+  <a href="{{ url_for('admin.section', name='testimonials') }}" class="dash-card"><i class="fa fa-quote-left"></i><strong>Testimonials</strong><span>Client reviews</span></a>
+  <a href="{{ url_for('admin.section', name='certs') }}"        class="dash-card"><i class="fa fa-certificate"></i><strong>Certificates</strong><span>10 cert slides</span></a>
+  <a href="{{ url_for('admin.section', name='contact') }}"      class="dash-card"><i class="fa fa-envelope"></i><strong>Contact</strong><span>Address & socials</span></a>
+  <a href="{{ url_for('admin.section', name='footer') }}"       class="dash-card"><i class="fa fa-sitemap"></i><strong>Footer</strong><span>Footer columns</span></a>
+  <a href="{{ url_for('admin.contacts') }}"                     class="dash-card"><i class="fa fa-inbox"></i><strong>Enquiries</strong><span>View all messages</span></a>
+</div>
+
+<div class="info-box">
+  <i class="fa fa-info-circle"></i>
+  All changes are saved to <code>cms_content.json</code> on the server and applied to the website immediately on the next page load.
+  Images can be typed in as a path (relative to the project root) or uploaded directly.
+</div>
+{% endblock %}
